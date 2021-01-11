@@ -24,7 +24,6 @@
  */
 
 #include "hfst-optimized-lookup.h"
-#include "inc/globals-common.h"  // some cc files include extern declarations for these variables...
 
 //#ifdef _MSC_VER
 //#  include <windows.h>
@@ -37,6 +36,20 @@ using hfst::hfst_fprintf_console;
 
 #include <cstdarg>
 #include <iostream> // DEBUG
+
+static OutputType outputType = xerox;
+
+static bool verboseFlag = false;
+
+static bool displayWeightsFlag = false;
+static bool displayUniqueFlag = false;
+static bool echoInputsFlag = false;
+static bool beFast = false;
+static int maxAnalyses = INT_MAX;
+static bool limit_reached = false;
+static unsigned long call_counter = 0;
+static double time_cutoff = 0.0;
+static clock_t start_clock;
 
 static float beam=-1;
 static bool pipe_input = false;
@@ -106,6 +119,62 @@ bool print_short_help(void)
 {
   print_usage();
   return true;
+}
+
+TransducerFile::TransducerFile(const char *p):
+    path(p),
+    file(p),
+    header(file.f),
+    alphabet(file.f, header.symbol_count())
+{
+    transducer = instantiateTransducer(file.f, header, alphabet);
+}
+
+std::string TransducerFile::lookup(const char* input_text) {
+  SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
+  for (int i = 0; i < 1000; ++i)
+    {
+      input_string[i] = NO_SYMBOL_NUMBER;
+    }
+
+      int i = 0;
+      SymbolNumber k = NO_SYMBOL_NUMBER;
+      // bool failed = false;
+
+      for ( const char ** Str = &input_text; **Str != 0; )
+        {
+          k = transducer->find_next_key(Str);
+#if OL_FULL_DEBUG
+          std::cout << "INPUT STRING ENTRY " << i << " IS " << k << std::endl;
+#endif
+          if (k == NO_SYMBOL_NUMBER)
+            {
+              if (echoInputsFlag)
+                {
+                  std::cout << std::endl;
+                }
+              // failed = true;
+              break;
+            }
+          input_string[i] = k;
+          ++i;
+        }
+
+      transducer->analyze(input_string);
+
+      std::ostringstream output;
+
+      Transducer* t = dynamic_cast<Transducer*>(transducer);
+      if (t) {
+          DisplayVector analyses = t->get_display_vector();
+
+          for (DisplayVector::iterator it = analyses.begin(); it != analyses.end(); it++) {
+              output << *it << "\n";
+          }
+      } else {
+          throw std::runtime_error("Weighted transducers not yet supported");
+      }
+      return output.str();
 }
 
 int main(int argc, char **argv)
@@ -330,8 +399,7 @@ void TransducerAlphabet::get_next_symbol(FILE * f, SymbolNumber k)
     {
       if (byte == EOF)
         {
-          std::cerr << "Could not parse transducer; wrong or corrupt file?" << std::endl;
-          exit(1);
+          throw HeaderParsingException();
         }
       *sym = byte;
       ++sym;
@@ -405,7 +473,7 @@ bool LetterTrie::has_key_starting_with(const char c) const
     return letters[(unsigned char) c] != NULL;
 }
 
-SymbolNumber LetterTrie::find_key(char ** p)
+SymbolNumber LetterTrie::find_key(const char ** p)
 {
   const char * old_p = *p;
   ++(*p);
@@ -446,9 +514,9 @@ void Encoder::read_input_symbols(KeyTable * kt)
     }
 }
 
-SymbolNumber Encoder::find_key(char ** p)
+SymbolNumber Encoder::find_key(const char ** p)
 {
-  if (ascii_symbols[(unsigned char)(**p)] == NO_SYMBOL_NUMBER)
+  if (ascii_symbols[(unsigned const char)(**p)] == NO_SYMBOL_NUMBER)
     {
       return letters.find_key(p);
     }
@@ -457,8 +525,7 @@ SymbolNumber Encoder::find_key(char ** p)
   return s;
 }
 
-template <class genericTransducer>
-void runTransducer (genericTransducer T)
+void runTransducer (TransducerBase * T)
 {
   SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
   for (int i = 0; i < 1000; ++i)
@@ -501,9 +568,9 @@ void runTransducer (genericTransducer T)
       int i = 0;
       SymbolNumber k = NO_SYMBOL_NUMBER;
       bool failed = false;
-      for ( char ** Str = &str; **Str != 0; )
+      for ( const char ** Str = (const char **)&str; **Str != 0; )
         {
-          k = T.find_next_key(Str);
+          k = T->find_next_key(Str);
 #if OL_FULL_DEBUG
           std::cout << "INPUT STRING ENTRY " << i << " IS " << k << std::endl;
 #endif
@@ -549,17 +616,13 @@ void runTransducer (genericTransducer T)
           limit_reached = false;
       }
 
-      T.analyze(input_string);
-      T.printAnalyses(std::string(str));
+      T->analyze(input_string);
+      T->printAnalyses(std::string(str));
     }
 }
 
-int setup(FILE * f)
+TransducerBase * instantiateTransducer(FILE * f, TransducerHeader& header, TransducerAlphabet& alphabet)
 {
-  try {
-  TransducerHeader header(f);
-  TransducerAlphabet alphabet(f, header.symbol_count());
-  
   if (header.probe_flag(Has_unweighted_input_epsilon_cycles) ||
       header.probe_flag(Has_input_epsilon_cycles))
     {
@@ -574,24 +637,20 @@ int setup(FILE * f)
         {
           if (displayUniqueFlag)
             { // no flags, no weights, unique analyses only
-              TransducerUniq C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerUniq(f, header, alphabet);
             } else if (!displayUniqueFlag)
             { // no flags, no weights, all analyses
-            Transducer C(f, header, alphabet);
-            runTransducer(C);
+           return new Transducer(f, header, alphabet);
             }
         }
       else if (header.probe_flag(Weighted) == true)
         {
           if (displayUniqueFlag)
             { // no flags, weights, unique analyses only
-              TransducerWUniq C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerWUniq(f, header, alphabet);
             } else if (!displayUniqueFlag)
             { // no flags, weights, all analyses
-              TransducerW C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerW(f, header, alphabet);
             }
         }
     } else // handle flag diacritics
@@ -600,28 +659,37 @@ int setup(FILE * f)
         {
           if (displayUniqueFlag)
             { // flags, no weights, unique analyses only
-              TransducerFdUniq C(f, header, alphabet);
-              runTransducer(C);
+             // return new TransducerFdUniq(f, header, alphabet);
             } else
             { // flags, no weights, all analyses
-              TransducerFd C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerFd(f, header, alphabet);
             }
         }
       else if (header.probe_flag(Weighted) == true)
         {
           if (displayUniqueFlag)
             { // flags, weights, unique analyses only
-              TransducerWFdUniq C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerWFdUniq(f, header, alphabet);
             } else
             { // flags, no weights, all analyses
-              TransducerWFd C(f, header, alphabet);
-              runTransducer(C);
+             return new TransducerWFd(f, header, alphabet);
             }
         }
     }
-  }
+    throw std::runtime_error("should not happen");
+}
+
+int setup(FILE * f)
+{
+  try
+    {
+      TransducerHeader header(f);
+      TransducerAlphabet alphabet(f, header.symbol_count());
+
+      TransducerBase * T = instantiateTransducer(f,header, alphabet);
+      runTransducer(T);
+      delete T;
+    }
   catch (const HeaderParsingException & e)
     {
       std::cerr << "Invalid transducer header.\n";

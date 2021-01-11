@@ -20,9 +20,9 @@
   config.h-defined constants
 */
 
-const char * PACKAGE_NAME = "hfst-optimized-lookup";
-const char * PACKAGE_BUGREPORT = "hfst-bugs@helsinki.fi";
-const char * PACKAGE_STRING = "hfst-optimized-lookup 1.2";
+#define PACKAGE_NAME "hfst-optimized-lookup"
+#define PACKAGE_BUGREPORT "hfst-bugs@helsinki.fi"
+#define PACKAGE_STRING "hfst-optimized-lookup 1.2"
 
 /*
   NOTE:
@@ -46,30 +46,15 @@ const char * PACKAGE_STRING = "hfst-optimized-lookup 1.2";
 #include <cassert>
 #include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <time.h>
 
 enum OutputType {HFST, xerox};
-OutputType outputType = xerox;
 
-bool verboseFlag = false;
-
-bool displayWeightsFlag = false;
-bool displayUniqueFlag = false;
-bool echoInputsFlag = false;
-bool beFast = false;
-int maxAnalyses = INT_MAX;
-bool preserveDiacriticRepresentationsFlag = false;
-bool limit_reached = false;
-unsigned long call_counter = 0;
-double time_cutoff = 0.0;
-clock_t start_clock;
 
 #define MAX_IO_STRING 5000
 
-// the following flags are only meaningful with certain debugging #defines
-bool timingFlag = false;
-bool printDebuggingInformationFlag = false;
 
 typedef unsigned short SymbolNumber;
 typedef unsigned int TransitionTableIndex;
@@ -107,7 +92,7 @@ class HeaderParsingException: public std::exception
 {
 public:
     virtual const char* what() const throw()
-        { return("Parsing error while reading header"); }
+        { return("Parsing error while reading transducer header; wrong or corrupt file?"); }
 };
 
 class TransducerHeader
@@ -147,8 +132,7 @@ private:
                 property = true;
                 return;
             }
-            std::cerr << "Could not parse transducer; wrong or corrupt file?" << std::endl;
-            exit(1);
+            throw HeaderParsingException();
         }
 
 public:
@@ -307,7 +291,7 @@ public:
     void add_string(const char * p,SymbolNumber symbol_key);
     bool has_key_starting_with(const char c) const;
 
-    SymbolNumber find_key(char ** p);
+    SymbolNumber find_key(const char ** p);
 
 };
 
@@ -328,7 +312,7 @@ public:
             read_input_symbols(kt);
         }
 
-    SymbolNumber find_key(char ** p);
+    SymbolNumber find_key(const char ** p);
 };
 
 typedef std::vector<ValueNumber> FlagDiacriticState;
@@ -530,7 +514,17 @@ public:
         }
 };
 
-class Transducer
+class TransducerBase
+{
+public:
+    virtual SymbolNumber find_next_key(const char ** p) = 0;
+    virtual void analyze(SymbolNumber * input_string) = 0;
+    virtual void printAnalyses(std::string prepend) = 0;
+
+    virtual ~TransducerBase() {};
+};
+
+class Transducer: public TransducerBase
 {
 protected:
     TransducerHeader header;
@@ -619,17 +613,24 @@ public:
             return keys;
         }
 
-    SymbolNumber find_next_key(char ** p)
+    SymbolNumber find_next_key(const char ** p)
         {
             return encoder.find_key(p);
         }
 
     void analyze(SymbolNumber * input_string)
         {
+            display_vector.clear();
             get_analyses(input_string,output_string,output_string,START_INDEX);
         }
 
-    virtual void printAnalyses(std::string prepend);
+    const DisplayVector get_display_vector() {
+        return display_vector;
+    }
+
+    void printAnalyses(std::string prepend);
+
+    virtual ~Transducer() {}
 };
 
 class TransducerUniq: public Transducer
@@ -911,7 +912,7 @@ public:
         }
 };
 
-class TransducerW
+class TransducerW: public TransducerBase
 {
 protected:
 
@@ -1012,12 +1013,12 @@ public:
         }
 
 
-    SymbolNumber find_next_key(char ** p)
+    SymbolNumber find_next_key(const char ** p)
         {
             return encoder.find_key(p);
         }
 
-    virtual void printAnalyses(std::string prepend);
+    void printAnalyses(std::string prepend);
 };
 
 class TransducerWUniq: public TransducerW
@@ -1068,4 +1069,68 @@ public:
 
     void printAnalyses(std::string prepend);
 
+};
+
+TransducerBase * instantiateTransducer(FILE * f, TransducerHeader& header, TransducerAlphabet& alphabet);
+
+class TransducerNotFoundException: public std::exception
+{
+public:
+    std::string msg;
+
+    TransducerNotFoundException(const std::string& filename) throw()
+    {
+        std::ostringstream msgBuilder;
+        msgBuilder << "Transducer not found: ‘" << filename << "’";
+        msg = msgBuilder.str();
+    }
+
+    virtual ~TransducerNotFoundException() throw() {};
+
+    virtual const char* what() const throw()
+    {
+        return msg.c_str();
+    }
+};
+
+class File
+{
+public:
+    FILE * f;
+
+    File(const char* path) {
+        f = fopen(path, "rb");
+        if (f == NULL) {
+            throw TransducerNotFoundException(path);
+        }
+    }
+
+    ~File() {
+        if (f) {
+            fclose(f);
+        }
+    }
+};
+
+class TransducerFile
+{
+protected:
+    std::string path;
+    File file;
+    TransducerHeader header;
+    TransducerAlphabet alphabet;
+    TransducerBase* transducer;
+
+public:
+    TransducerFile(const char* p);
+
+    std::string lookup(const char* input_string);
+
+    int symbol_count() {
+        return header.symbol_count();
+    }
+
+    ~TransducerFile() {
+        delete transducer;
+    }
 };
