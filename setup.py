@@ -24,6 +24,8 @@ def file1_is_newer_than_file2(file1, file2):
     path2 = Path(file2)
     if not path2.exists():
         return True
+    if not path1.exists():
+        return False
     return path1.stat().st_mtime > path2.stat().st_mtime
 
 
@@ -61,7 +63,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="hfst-optimized-lookup",
-    version="0.0.1",
+    version="0.0.2",
     ext_modules=extensions,
     packages=packages,
     url="https://github.com/UAlbertaALTLab/hfst-optimized-lookup",

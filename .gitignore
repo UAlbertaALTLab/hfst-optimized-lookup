@@ -1,4 +1,5 @@
 /build/
+/dist/
 
 # cython-generated
 hfst_optimized_lookup/_hfst_optimized_lookup.cpp
