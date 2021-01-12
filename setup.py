@@ -10,6 +10,7 @@
 #  - https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#basic-setup-py
 #  - https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
 
+from os import path
 from pathlib import Path
 from setuptools import setup, Extension
 
@@ -26,7 +27,9 @@ def file1_is_newer_than_file2(file1, file2):
     return path1.stat().st_mtime > path2.stat().st_mtime
 
 
-packages = ["hfst-optimized-lookup"]
+# The importable name of the python package, not the PyPI package name
+# which has hyphens instead of underscores and goes in `setup(name=)`.
+packages = ["hfst_optimized_lookup"]
 
 cython_source_stem = "hfst_optimized_lookup/_hfst_optimized_lookup"
 
@@ -39,6 +42,7 @@ ext = ".pyx" if use_cython else ".cpp"
 sources = [
     f"{cython_source_stem}{ext}",
     "hfst_optimized_lookup/hfst-optimized-lookup.cc",
+    "hfst_optimized_lookup/hfst-optimized-lookup.h",
 ]
 
 extensions = [
@@ -50,4 +54,25 @@ if use_cython:
 
     extensions = cythonize(extensions, language_level=3)
 
-setup(ext_modules=extensions, packages=packages)
+# https://packaging.python.org/guides/making-a-pypi-friendly-readme/#including-your-readme-in-your-package-s-metadata
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+setup(
+    name="hfst-optimized-lookup",
+    version="0.0.1",
+    ext_modules=extensions,
+    packages=packages,
+    url="https://github.com/UAlbertaALTLab/hfst-optimized-lookup",
+    author="Andrew Neitsch",
+    author_email="178162+andrewdotn@users.noreply.github.com",
+    description="A pip-installable library version of hfst-optimized-lookup from https://hfst.github.io/",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    license="Apache-2.0",
+    classifiers=[
+        'License :: OSI Approved :: Apache Software License',
+        'Topic :: Text Processing :: Linguistic'
+    ]
+)
