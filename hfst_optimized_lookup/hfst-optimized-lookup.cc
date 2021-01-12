@@ -139,21 +139,12 @@ std::string TransducerFile::lookup(const char* input_text) {
 
       int i = 0;
       SymbolNumber k = NO_SYMBOL_NUMBER;
-      // bool failed = false;
 
       for ( const char ** Str = &input_text; **Str != 0; )
         {
           k = transducer->find_next_key(Str);
-#if OL_FULL_DEBUG
-          std::cout << "INPUT STRING ENTRY " << i << " IS " << k << std::endl;
-#endif
           if (k == NO_SYMBOL_NUMBER)
             {
-              if (echoInputsFlag)
-                {
-                  std::cout << std::endl;
-                }
-              // failed = true;
               break;
             }
           input_string[i] = k;
