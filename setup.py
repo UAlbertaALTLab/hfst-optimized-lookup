@@ -98,7 +98,7 @@ if sys.platform == "darwin" and "MACOSX_DEPLOYMENT_TARGET" not in os.environ:
 
 setup(
     name="hfst-optimized-lookup",
-    version="0.0.4",
+    version="0.0.5",
     ext_modules=extensions,
     packages=packages,
     url="https://github.com/UAlbertaALTLab/hfst-optimized-lookup",

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from hfst_optimized_lookup import TransducerFile
@@ -23,6 +25,11 @@ def test_subsequent_lookups(fst):
 
 def test_multiple_analyses(fst):
     assert fst.lookup("môswa") == ["môswa+N+A+Sg", "môswa+N+A+Obv"]
+
+
+def test_create_from_path_obj():
+    fst = TransducerFile(Path(TEST_FST))
+    assert fst.lookup("itwêwina") == ["itwêwin+N+I+Pl"]
 
 
 @pytest.mark.skip("not yet implemented")

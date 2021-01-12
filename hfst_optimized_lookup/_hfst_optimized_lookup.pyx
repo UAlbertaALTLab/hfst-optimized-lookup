@@ -1,3 +1,5 @@
+import os
+
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 from libcpp.string cimport string as std_string
@@ -54,6 +56,7 @@ cdef class PyTransducerFile:
     cdef TransducerFile* c_tf # pointer to the C++ instance we're wrapping
 
     def __cinit__(self, path):
+        path = os.fspath(path)
         self.c_tf = new TransducerFile(bytes_from_cstring(path))
 
     def symbol_count(self):
