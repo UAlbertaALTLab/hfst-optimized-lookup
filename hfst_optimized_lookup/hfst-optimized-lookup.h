@@ -236,6 +236,7 @@ private:
 
     void get_next_symbol(FILE * f, SymbolNumber k);
 
+    static const int LINE_SIZE = 1000;
     char * line;
 
     std::map<std::string, SymbolNumber> feature_bucket;
@@ -248,7 +249,7 @@ public:
         number_of_symbols(symbol_number),
         kt(new KeyTable),
         operations(),
-        line((char*)(malloc(1000)))
+        line((char*)(malloc(LINE_SIZE)))
         {
             feat_num = 0;
             val_num = 1;

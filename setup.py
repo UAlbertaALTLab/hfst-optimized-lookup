@@ -42,11 +42,7 @@ sources = [
 ]
 
 extensions = [
-    Extension(
-        "hfst_optimized_lookup._hfstol",
-        sources=sources,
-        language="c++",
-    )
+    Extension("hfst_optimized_lookup._hfstol", sources=sources, language="c++")
 ]
 
 if use_cython:

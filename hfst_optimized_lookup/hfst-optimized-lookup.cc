@@ -397,7 +397,7 @@ void TransducerAlphabet::get_next_symbol(FILE * f, SymbolNumber k)
   char * sym = line;
   while ( (byte = fgetc(f)) != 0 )
     {
-      if (byte == EOF)
+      if (byte == EOF || sym - line >= LINE_SIZE)
         {
           throw HeaderParsingException();
         }

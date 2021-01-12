@@ -8,11 +8,11 @@ EXT_SUFFIX := $(shell python -c 'import sysconfig; print(sysconfig.get_config_va
 SONAME = hfst_optimized_lookup/_hfstol$(EXT_SUFFIX)
 
 .PHONY: test
-test: all
+test: $(SONAME) crk-descriptive-analyzer.hfstol
 	pytest -s --doctest-glob=README.md
 
 .PHONY: all
-all: $(SONAME) crk-descriptive-analyzer.hfstol hfst-optimized-lookup
+all: test hfst-optimized-lookup
 
 %.hfstol:
 	wget "https://github.com/UAlbertaALTLab/cree-intelligent-dictionary/raw/master/CreeDictionary/res/fst/$@"
@@ -33,6 +33,9 @@ hfst-optimized-lookup: \
     hfst_optimized_lookup/hfst-optimized-lookup.h \
 
 	g++ -W -Wall -Werror -o $@ $<
+
+black:
+	black .
 
 clean::
 	rm -f hfst-optimized-lookup
