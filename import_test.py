@@ -5,19 +5,37 @@ from hfst_optimized_lookup import TransducerFile
 TEST_FST = "crk-descriptive-analyzer.hfstol"
 
 
+@pytest.fixture
+def fst():
+    print("creating fst")
+    return TransducerFile(TEST_FST)
+
+
 def test_symbol_count():
+    # If this returned a non-number, we’d get a TypeError here.
     assert TransducerFile(TEST_FST).symbol_count() > 0
 
 
-def test_subsequent_lookups():
-    fst = TransducerFile(TEST_FST)
+def test_subsequent_lookups(fst):
     assert fst.lookup("itwêwina") == ["itwêwin+N+I+Pl"]
     assert fst.lookup("nikî-nipân") == ["PV/ki+nipâw+V+AI+Ind+1Sg"]
 
 
-def test_multiple_analyses():
-    fst = TransducerFile(TEST_FST)
+def test_multiple_analyses(fst):
     assert fst.lookup("môswa") == ["môswa+N+A+Sg", "môswa+N+A+Obv"]
+
+
+@pytest.mark.skip("not yet implemented")
+def test_limit(fst):
+    assert fst.lookup("môswa", limit=1) == ["môswa+N+A+Sg"]
+
+
+@pytest.mark.skip("not yet implemented")
+def test_tag_lookup1(fst):
+    assert fst.lookup_tags("môswa") == [
+        ["môswa", "+N", "+A", "+Sg"],
+        ["môswa", "+N", "+A", "+Obv"],
+    ]
 
 
 def test_raises_exception_on_missing_file():
