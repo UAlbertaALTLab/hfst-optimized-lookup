@@ -1,0 +1,5 @@
+include hfst_optimized_lookup/_hfst_optimized_lookup.pyx
+include hfst_optimized_lookup/hfst-optimized-lookup.h
+include LICENSE
+
+exclude build/

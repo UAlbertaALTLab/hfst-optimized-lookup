@@ -44,7 +44,6 @@ ext = ".pyx" if use_cython else ".cpp"
 sources = [
     f"{cython_source_stem}{ext}",
     "hfst_optimized_lookup/hfst-optimized-lookup.cc",
-    "hfst_optimized_lookup/hfst-optimized-lookup.h",
 ]
 
 extensions = [
@@ -58,12 +57,12 @@ if use_cython:
 
 # https://packaging.python.org/guides/making-a-pypi-friendly-readme/#including-your-readme-in-your-package-s-metadata
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
     name="hfst-optimized-lookup",
-    version="0.0.2",
+    version="0.0.3",
     ext_modules=extensions,
     packages=packages,
     url="https://github.com/UAlbertaALTLab/hfst-optimized-lookup",
@@ -71,10 +70,10 @@ setup(
     author_email="178162+andrewdotn@users.noreply.github.com",
     description="A pip-installable library version of hfst-optimized-lookup from https://hfst.github.io/",
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     license="Apache-2.0",
     classifiers=[
-        'License :: OSI Approved :: Apache Software License',
-        'Topic :: Text Processing :: Linguistic'
-    ]
+        "License :: OSI Approved :: Apache Software License",
+        "Topic :: Text Processing :: Linguistic",
+    ],
 )
