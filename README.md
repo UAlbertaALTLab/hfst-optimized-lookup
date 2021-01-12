@@ -18,3 +18,9 @@ built for [itwêwina][].
     application suite
 
 [hfst]: https://github.com/hfst/hfst
+
+### Releasing
+
+  - Increment version in `setup.py`
+  - `python3 setup.py sdist`
+  - `python3 -m twine upload dist/hfst-optimized-lookup-$VERSION.tar.gz`
