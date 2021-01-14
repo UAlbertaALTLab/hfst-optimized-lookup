@@ -1,5 +1,9 @@
 include hfst_optimized_lookup/_hfst_optimized_lookup.pyx
 include hfst_optimized_lookup/hfst-optimized-lookup.h
+
+include hfst_optimized_lookup/py.typed
+include hfst_optimized_lookup/__init__.pyi
+
 include LICENSE
 
 exclude build/

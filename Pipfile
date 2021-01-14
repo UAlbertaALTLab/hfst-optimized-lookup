@@ -9,6 +9,9 @@ name = "pypi"
 cython = "*"
 pytest = "*"
 black = "*"
+twine = "*"
+mypy = "*"
+pytest-mypy = "*"
 
 [requires]
 python_version = "3.9"

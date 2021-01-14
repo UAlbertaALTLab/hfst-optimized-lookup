@@ -9,7 +9,7 @@ SONAME = hfst_optimized_lookup/_hfstol$(EXT_SUFFIX)
 
 .PHONY: test
 test: $(SONAME) crk-descriptive-analyzer.hfstol
-	pytest -s --doctest-glob=README.md
+	pytest --mypy -s --doctest-glob=README.md
 
 .PHONY: all
 all: test hfst-optimized-lookup

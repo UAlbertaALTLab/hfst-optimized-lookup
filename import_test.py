@@ -7,9 +7,9 @@ from hfst_optimized_lookup import TransducerFile
 TEST_FST = "crk-descriptive-analyzer.hfstol"
 
 
-@pytest.fixture
+# scope="session" reuses the FST for all tests that use this fixture
+@pytest.fixture(scope="session")
 def fst():
-    print("creating fst")
     return TransducerFile(TEST_FST)
 
 
@@ -18,12 +18,12 @@ def test_symbol_count():
     assert TransducerFile(TEST_FST).symbol_count() > 0
 
 
-def test_subsequent_lookups(fst):
+def test_subsequent_lookups(fst: TransducerFile):
     assert fst.lookup("itwêwina") == ["itwêwin+N+I+Pl"]
     assert fst.lookup("nikî-nipân") == ["PV/ki+nipâw+V+AI+Ind+1Sg"]
 
 
-def test_multiple_analyses(fst):
+def test_multiple_analyses(fst: TransducerFile):
     assert fst.lookup("môswa") == ["môswa+N+A+Sg", "môswa+N+A+Obv"]
 
 
@@ -38,11 +38,15 @@ def test_limit(fst):
 
 
 @pytest.mark.skip("not yet implemented")
-def test_tag_lookup1(fst):
-    assert fst.lookup_tags("môswa") == [
-        ["môswa", "+N", "+A", "+Sg"],
-        ["môswa", "+N", "+A", "+Obv"],
-    ]
+@pytest.mark.parametrize(
+    ("surface", "deep"),
+    [
+        ["môswa", [["môswa", "+N", "+A", "+Sg"], ["môswa", "+N", "+A", "+Obv"],]],
+        ["nikî-nipân", ["PV/ki+", "nipâw", "+V", "+AI", "+Ind", "+1Sg"]],
+    ],
+)
+def test_symbol_lookup1(fst, surface, deep):  #: TransducerFile
+    assert fst.lookup_symbols(surface) == deep
 
 
 def test_raises_exception_on_missing_file():

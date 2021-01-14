@@ -1,3 +1,9 @@
+# type: ignore
+# ^ otherwise `pytest --mypy` complains; see “No stub for setuptools?” at
+#   https://github.com/python/typeshed/issues/2171
+
+# setup.py for hfst_optimized_lookup
+#
 # The intent here is:
 #   - When building from a git checkout, run Cython on the `.pyx` file to
 #     get a `.cpp` file to go to pypi
@@ -73,7 +79,7 @@ if use_cython:
 #              ^~~~~
 #     1 error generated.
 #
-# Settings MACOSX_DEPLOYMENT_TARGET to a later version apparently overrides
+# Setting MACOSX_DEPLOYMENT_TARGET to a later version apparently overrides
 # the default behaviour.
 #
 # You can check what version of macOS your Python targets by running:
@@ -98,9 +104,12 @@ if sys.platform == "darwin" and "MACOSX_DEPLOYMENT_TARGET" not in os.environ:
 
 setup(
     name="hfst-optimized-lookup",
-    version="0.0.5",
+    version="0.0.6",
     ext_modules=extensions,
     packages=packages,
+    # `include_package_data` is one way of triggering an install of the
+    # `py.typed` marker file
+    include_package_data=True,
     url="https://github.com/UAlbertaALTLab/hfst-optimized-lookup",
     author="Andrew Neitsch",
     author_email="178162+andrewdotn@users.noreply.github.com",
