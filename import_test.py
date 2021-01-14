@@ -27,6 +27,27 @@ def test_multiple_analyses(fst: TransducerFile):
     assert fst.lookup("môswa") == ["môswa+N+A+Sg", "môswa+N+A+Obv"]
 
 
+EXPECTED_BULK_LOOKUP_RESULT_1 = {
+    "itwêwina": set(["itwêwin+N+I+Pl"]),
+    "nikî-nipân": set(["PV/ki+nipâw+V+AI+Ind+1Sg"]),
+    "môswa": set(["môswa+N+A+Sg", "môswa+N+A+Obv"]),
+}
+
+
+def test_bulk_lookup(fst: TransducerFile):
+    assert (
+        fst.bulk_lookup(EXPECTED_BULK_LOOKUP_RESULT_1.keys())
+        == EXPECTED_BULK_LOOKUP_RESULT_1
+    )
+
+
+def test_bulk_lookup_with_iterator(fst: TransducerFile):
+    assert (
+        fst.bulk_lookup(w for w in EXPECTED_BULK_LOOKUP_RESULT_1.keys())
+        == EXPECTED_BULK_LOOKUP_RESULT_1
+    )
+
+
 def test_create_from_path_obj():
     fst = TransducerFile(Path(TEST_FST))
     assert fst.lookup("itwêwina") == ["itwêwin+N+I+Pl"]

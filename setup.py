@@ -104,7 +104,7 @@ if sys.platform == "darwin" and "MACOSX_DEPLOYMENT_TARGET" not in os.environ:
 
 setup(
     name="hfst-optimized-lookup",
-    version="0.0.6",
+    version="0.0.7",
     ext_modules=extensions,
     packages=packages,
     # `include_package_data` is one way of triggering an install of the

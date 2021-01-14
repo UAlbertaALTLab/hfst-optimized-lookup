@@ -66,6 +66,12 @@ cdef class PyTransducerFile:
         ret = std_string_to_str(self.c_tf.lookup(bytes_from_cstring(string)))
         return [x.strip() for x in ret.split('\n') if x.strip()]
 
+    def bulk_lookup(self, words):
+        ret = {}
+        for w in words:
+            ret[w] = set(self.lookup(w))
+        return ret
+
     def __dealloc__(self):
         del self.c_tf
 
