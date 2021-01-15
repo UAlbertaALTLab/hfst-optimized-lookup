@@ -1,0 +1,39 @@
+on:
+  pull_request:
+  push:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '05 16 * * *'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        python: [3.9]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      # Mostly borrowed from https://github.com/actions/cache/blob/main/examples.md#python---pipenv
+      - id: cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv${{ matrix.python }}-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv${{ matrix.python }}-
+
+      - run: pip install pipenv
+
+      - run: pipenv install --dev
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - run: pipenv run make test
