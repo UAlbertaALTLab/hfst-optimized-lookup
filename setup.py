@@ -79,8 +79,9 @@ if use_cython:
 #              ^~~~~
 #     1 error generated.
 #
-# Setting MACOSX_DEPLOYMENT_TARGET to a later version apparently overrides
-# the default behaviour.
+# Setting MACOSX_DEPLOYMENT_TARGET overrides this; according to the
+# clang(1) man page, “If -mmacosx-version-min is unspecified, the default
+# deployment target is read from this environment variable.’
 #
 # You can check what version of macOS your Python targets by running:
 #
@@ -103,8 +104,6 @@ if sys.platform == "darwin" and "MACOSX_DEPLOYMENT_TARGET" not in os.environ:
         os.environ["MACOSX_DEPLOYMENT_TARGET"] = "10.9"
 
 setup(
-    name="hfst-optimized-lookup",
-    version="0.0.7",
     ext_modules=extensions,
     packages=packages,
     # `include_package_data` is one way of triggering an install of the

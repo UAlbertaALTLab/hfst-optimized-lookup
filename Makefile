@@ -8,7 +8,7 @@ EXT_SUFFIX := $(shell python -c 'import sysconfig; print(sysconfig.get_config_va
 SONAME = hfst_optimized_lookup/_hfstol$(EXT_SUFFIX)
 
 .PHONY: test
-test: $(SONAME) crk-descriptive-analyzer.hfstol
+test: $(SONAME) crk-relaxed-analyzer-for-dictionary.hfstol
 	pytest --mypy -s --doctest-glob=README.md
 
 .PHONY: all

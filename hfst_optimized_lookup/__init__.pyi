@@ -1,6 +1,7 @@
 import os
 from typing import Union, List, Set, Dict, Iterable
 
+__version__: str
 
 class TransducerFile:
     def __init__(self, path: Union[str, os.PathLike[str]]) -> None: ...

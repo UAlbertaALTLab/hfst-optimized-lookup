@@ -2,15 +2,20 @@ from pathlib import Path
 
 import pytest
 
+import hfst_optimized_lookup
 from hfst_optimized_lookup import TransducerFile
 
-TEST_FST = "crk-descriptive-analyzer.hfstol"
+TEST_FST = "crk-relaxed-analyzer-for-dictionary.hfstol"
 
 
 # scope="session" reuses the FST for all tests that use this fixture
 @pytest.fixture(scope="session")
 def fst():
     return TransducerFile(TEST_FST)
+
+
+def test_has_version():
+    assert type(hfst_optimized_lookup.__version__) == str
 
 
 def test_symbol_count():
@@ -62,7 +67,13 @@ def test_limit(fst):
 @pytest.mark.parametrize(
     ("surface", "deep"),
     [
-        ["môswa", [["môswa", "+N", "+A", "+Sg"], ["môswa", "+N", "+A", "+Obv"],]],
+        [
+            "môswa",
+            [
+                ["môswa", "+N", "+A", "+Sg"],
+                ["môswa", "+N", "+A", "+Obv"],
+            ],
+        ],
         ["nikî-nipân", ["PV/ki+", "nipâw", "+V", "+AI", "+Ind", "+1Sg"]],
     ],
 )
