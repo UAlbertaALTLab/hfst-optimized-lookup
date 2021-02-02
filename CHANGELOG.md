@@ -1,6 +1,8 @@
 # hfst-optimized-lookup changelog
 
-## v0.0.8 2021-02-01
+## Unreleased
+
+## v0.0.8 2021-02-02
 
   - new `lookup_symbols()` method returns symbols as list elements; no more
     need for client heuristics to guess whether or not a substring came
