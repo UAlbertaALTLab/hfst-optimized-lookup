@@ -63,18 +63,17 @@ def test_limit(fst):
     assert fst.lookup("môswa", limit=1) == ["môswa+N+A+Sg"]
 
 
-@pytest.mark.skip("not yet implemented")
 @pytest.mark.parametrize(
     ("surface", "deep"),
     [
         [
             "môswa",
             [
-                ["môswa", "+N", "+A", "+Sg"],
-                ["môswa", "+N", "+A", "+Obv"],
+                ["m", "ô", "s", "w", "a", "+N", "+A", "+Sg"],
+                ["m", "ô", "s", "w", "a", "+N", "+A", "+Obv"],
             ],
         ],
-        ["nikî-nipân", ["PV/ki+", "nipâw", "+V", "+AI", "+Ind", "+1Sg"]],
+        ["nikî-nipân", [["PV/ki+", "n", "i", "p", "â", "w", "+V", "+AI", "+Ind", "+1Sg"]]],
     ],
 )
 def test_symbol_lookup1(fst, surface, deep):  #: TransducerFile

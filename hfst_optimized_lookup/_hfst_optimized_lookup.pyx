@@ -3,6 +3,7 @@ import os
 from libc.stdlib cimport malloc, free
 from libc.string cimport strdup
 from libcpp.string cimport string as std_string
+from libcpp.vector cimport vector
 
 ### String utilities
 # These would go into a separate .pyx file if I could get that to compile
@@ -49,7 +50,7 @@ cdef extern from "hfst-optimized-lookup.h":
         # originating from the constructor will not be handled by Cython.”
         TransducerFile(const char* path) except +
         int symbol_count() except +
-        std_string lookup(const char* input_string) except +
+        vector[vector[std_string]] lookup(const char* input_string) except +
 
 
 cdef class PyTransducerFile:
@@ -62,9 +63,12 @@ cdef class PyTransducerFile:
     def symbol_count(self):
         return self.c_tf.symbol_count()
 
+    def lookup_symbols(self, string):
+        cdef vector[vector[std_string]] results = self.c_tf.lookup(bytes_from_cstring(string))
+        return [[x.decode('UTF-8') for x in y] for y in results]
+
     def lookup(self, string):
-        ret = std_string_to_str(self.c_tf.lookup(bytes_from_cstring(string)))
-        return [x.strip() for x in ret.split('\n') if x.strip()]
+        return [''.join(x) for x in self.lookup_symbols(string)]
 
     def bulk_lookup(self, words):
         ret = {}

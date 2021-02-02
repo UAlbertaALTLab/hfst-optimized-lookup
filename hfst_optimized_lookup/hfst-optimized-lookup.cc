@@ -130,7 +130,7 @@ TransducerFile::TransducerFile(const char *p):
     transducer = instantiateTransducer(file.f, header, alphabet);
 }
 
-std::string TransducerFile::lookup(const char* input_text) {
+std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_text) {
   SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
   for (int i = 0; i < 1000; ++i)
     {
@@ -153,19 +153,24 @@ std::string TransducerFile::lookup(const char* input_text) {
 
       transducer->analyze(input_string);
 
-      std::ostringstream output;
+      std::vector<std::vector<std::string> > output;
 
       Transducer* t = dynamic_cast<Transducer*>(transducer);
       if (t) {
           DisplayVector analyses = t->get_display_vector();
 
           for (DisplayVector::iterator it = analyses.begin(); it != analyses.end(); it++) {
-              output << *it << "\n";
+              std::vector<std::string> output_analysis;
+              for (std::vector<std::string>::iterator it2 = it->begin(); it2 != it->end(); it2++) {
+                output_analysis.push_back(*it2);
+              }
+
+              output.push_back(output_analysis);
           }
       } else {
           throw std::runtime_error("Weighted transducers not yet supported");
       }
-      return output.str();
+      return output;
 }
 
 int main(int argc, char **argv)
@@ -1026,10 +1031,14 @@ void Transducer::note_analysis(SymbolNumber * whole_output_string)
         std::cout << std::endl;
     } else
     {
-      std::string str = "";
+      std::vector<std::string> str;
       for (SymbolNumber * num = whole_output_string; *num != NO_SYMBOL_NUMBER; ++num)
         {
-          str.append(symbol_table[*num]);
+          const char* symbol = symbol_table[*num];
+          // Assuming we don't care about Epsilon transitions in the output
+          if (*symbol) {
+            str.push_back(symbol);
+          }
         }
       display_vector.push_back(str);
     }
@@ -1181,7 +1190,11 @@ void Transducer::printAnalyses(std::string prepend)
             hfst_fprintf_console(stdout, "%s\n", it->c_str());
           else
 #endif
-            std::cout << *it << std::endl;
+            std::vector<std::string>::iterator it2 = it->begin();
+            while ( it2 != it->end() ) {
+              std::cout << *it2 << std::endl;
+              ++it2;
+            }
 
           ++it;
           ++i;

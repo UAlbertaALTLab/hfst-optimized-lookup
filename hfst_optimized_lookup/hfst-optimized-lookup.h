@@ -326,7 +326,7 @@ int setup(FILE * f);
  * BEGIN old transducer.h
  */
 
-typedef std::vector<std::string> DisplayVector;
+typedef std::vector<std::vector<std::string> > DisplayVector;
 typedef std::set<std::string> DisplaySet;
 
 class TransitionIndex
@@ -1125,7 +1125,7 @@ protected:
 public:
     TransducerFile(const char* p);
 
-    std::string lookup(const char* input_string);
+    std::vector<std::vector<std::string> > lookup(const char* input_string);
 
     int symbol_count() {
         return header.symbol_count();
