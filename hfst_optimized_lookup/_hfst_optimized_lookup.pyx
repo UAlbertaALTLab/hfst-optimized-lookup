@@ -1,3 +1,4 @@
+# TODO: note: this creates a module called ._hfstol
 import os
 
 from libc.stdlib cimport malloc, free

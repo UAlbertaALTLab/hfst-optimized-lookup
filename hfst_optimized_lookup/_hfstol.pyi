@@ -1,9 +1,8 @@
+# typings for cython module: _hfstol (source in _hfst_optimized_lookup.pyx)
 import os
 from typing import Union, List, Set, Dict, Iterable
 
-__version__: str
-
-class TransducerFile:
+class PyTransducerFile:
     def __init__(self, path: Union[str, os.PathLike[str]]) -> None: ...
     def lookup(self, string: str) -> List[str]: ...
     def lookup_symbols(self, string: str) -> List[List[str]]: ...
