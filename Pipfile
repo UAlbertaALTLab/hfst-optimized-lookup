@@ -3,15 +3,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[packages]
-mypy = ">=0.800"
-
 [dev-packages]
 cython = "*"
 pytest = "*"
 black = "*"
 twine = "*"
-mypy = "*"
+mypy = ">=0.800"
 pytest-mypy = "*"
 
 [requires]
