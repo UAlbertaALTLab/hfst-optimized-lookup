@@ -79,7 +79,9 @@ def test_limit(fst: TransducerFile) -> None:
         ],
     ],
 )
-def test_symbol_lookup1(fst: TransducerFile, surface: str, deep) -> None:
+def test_symbol_lookup1(
+    fst: TransducerFile, surface: str, deep: list[list[str]]
+) -> None:
     assert fst.lookup_symbols(surface) == deep
 
 
