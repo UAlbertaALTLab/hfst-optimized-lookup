@@ -15,7 +15,7 @@ def fst() -> TransducerFile:
 
 
 def test_has_version() -> None:
-    assert type(hfst_optimized_lookup.__version__) == str
+    assert isinstance(hfst_optimized_lookup.__version__, str)
 
 
 def test_symbol_count() -> None:
