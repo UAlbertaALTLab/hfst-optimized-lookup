@@ -10,7 +10,7 @@ cython = "*"
 pytest = "*"
 black = "*"
 twine = "*"
-mypy = "*"
+mypy = ">=0.800"
 pytest-mypy = "*"
 
 [requires]

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+  - Fixed: missing typings for `TransducerFile.lookup_symbols()`
+
 ## v0.0.8 2021-02-02
 
   - new `lookup_symbols()` method returns symbols as list elements; no more
