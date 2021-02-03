@@ -1,6 +1,6 @@
 # hfst-optimized-lookup changelog
 
-## Unreleased
+## v0.0.9 2021-02-03
 
   - Fixed: missing typings for `TransducerFile.lookup_symbols()`
 
