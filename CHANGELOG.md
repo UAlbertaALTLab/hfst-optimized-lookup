@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.0.9 2021-02-03
+
   - Fixed: missing typings for `TransducerFile.lookup_symbols()`
 
 ## v0.0.8 2021-02-02
