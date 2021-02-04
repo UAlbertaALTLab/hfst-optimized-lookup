@@ -1,13 +1,14 @@
 # hfst-optimized-lookup changelog
 
-## Unreleased
-
-## v0.0.9 2021-02-03
+## v0.0.10 2021-02-04
 
   - Added: `TransducerFile.lookup_lemma_with_affixes()` which returns
     a list of `Analyses(prefixes=(...,), lemma="", suffixes=(...,))`.
     This is to facilitate development with the Plains Cree FST and other
     FSTs built by ALTLab.
+
+## v0.0.9 2021-02-03
+
   - Fixed: missing typings for `TransducerFile.lookup_symbols()`
 
 ## v0.0.8 2021-02-02
