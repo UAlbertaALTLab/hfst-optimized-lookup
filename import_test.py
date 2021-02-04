@@ -88,16 +88,74 @@ def test_symbol_lookup1(
 @pytest.mark.parametrize(
     ("surface", "example"),
     [
+        # VTA with a prefix:
         (
             "ê-mowât",
             Analysis(("PV/e+",), "mowêw", ("+V", "+TA", "+Cnj", "+3Sg", "+4Sg/PlO")),
+        ),
+        # VAI with prefixes:
+        (
+            "ê-kî-nitawi-kâh-kîmôci-kotiskâwêyâhk",
+            Analysis(
+                prefixes=("PV/e+", "PV/ki+", "PV/nitawi+", "RdplS+", "PV/kimoci+"),
+                lemma="kotiskâwêw",
+                suffixes=("+V", "+AI", "+Cnj", "+12Pl"),
+            ),
+        ),
+        # Ipc:
+        (
+            # NOTE: assuming relaxed analyzer for dictionary which:
+            #  - understands "tansi" is a spelling of "tânisi"
+            #  - does NOT output an +Err/Orth tag!
+            "tansi",
+            Analysis((), "tânisi", ("+Ipc",)),
+        ),
+        # NA, with possession
+        (
+            "nitêm",
+            Analysis((), "atim", ("+N", "+A", "+Px1Sg", "+Sg")),
+        ),
+        # NID
+        (
+            "otâsa",
+            Analysis(
+                (),
+                "mitâs",
+                (
+                    "+N",
+                    "+I",
+                    "+D",
+                    "+Px3Sg",
+                    "+Pl",
+                ),
+            ),
+        ),
+        # VAI, no prefixes, unspecified actor:
+        (
+            "nîminâniwan",
+            Analysis((), "nîmiw", ("+V", "+AI", "+Ind", "+X")),
+        ),
+        # VII, tense prefix
+        (
+            "kî-kinêpikoskâw",
+            Analysis(
+                prefixes=("PV/ki+",),
+                lemma="kinêpikoskâw",
+                suffixes=(
+                    "+V",
+                    "+II",
+                    "+Ind",
+                    "+3Sg",
+                ),
+            ),
         ),
     ],
 )
 def test_lookup_lemma_with_affixes(
     fst: TransducerFile, surface: str, example: Analysis
 ) -> None:
-    assert example in fst.lookup_lemma_with_affixes(surface)
+    analyses = fst.lookup_lemma_with_affixes(surface)
+    assert example in analyses
 
 
 def test_raises_exception_on_missing_file() -> None:
