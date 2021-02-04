@@ -1,4 +1,3 @@
-# NOTE: this is compiled to a module called ._hfstol
 import os
 
 from libc.stdlib cimport malloc, free

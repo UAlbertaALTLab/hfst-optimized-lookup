@@ -1,4 +1,4 @@
-# typings for cython module: _hfstol (source in _hfst_optimized_lookup.pyx)
+# typings for cython module _hfst_optimized_lookup.pyx
 import os
 from typing import Union, List, Set, Dict, Iterable
 
