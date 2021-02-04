@@ -1,5 +1,7 @@
 # hfst-optimized-lookup changelog
 
+## Unreleased
+
 ## v0.0.10 2021-02-04
 
   - Added: `TransducerFile.lookup_lemma_with_affixes()` which returns
