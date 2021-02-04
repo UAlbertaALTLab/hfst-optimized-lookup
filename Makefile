@@ -5,7 +5,7 @@ SHELL = /bin/bash -eu
 
 EXT_SUFFIX := $(shell python -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))')
 
-SONAME = hfst_optimized_lookup/_hfstol$(EXT_SUFFIX)
+SONAME = hfst_optimized_lookup/_hfst_optimized_lookup$(EXT_SUFFIX)
 
 .PHONY: test
 test: $(SONAME) crk-relaxed-analyzer-for-dictionary.hfstol
