@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 
 import hfst_optimized_lookup
-from hfst_optimized_lookup import TransducerFile
+from hfst_optimized_lookup import TransducerFile, Analysis
 
 TEST_FST = "crk-relaxed-analyzer-for-dictionary.hfstol"
 
@@ -83,6 +83,21 @@ def test_symbol_lookup1(
     fst: TransducerFile, surface: str, deep: list[list[str]]
 ) -> None:
     assert fst.lookup_symbols(surface) == deep
+
+
+@pytest.mark.parametrize(
+    ("surface", "example"),
+    [
+        (
+            "ê-mowât",
+            Analysis(("PV/e+",), "mowêw", ("+V", "+TA", "+Cnj", "+3Sg", "+4Sg/PlO")),
+        ),
+    ],
+)
+def test_lookup_lemma_with_affixes(
+    fst: TransducerFile, surface: str, example: Analysis
+) -> None:
+    assert example in fst.lookup_lemma_with_affixes(surface)
 
 
 def test_raises_exception_on_missing_file() -> None:
