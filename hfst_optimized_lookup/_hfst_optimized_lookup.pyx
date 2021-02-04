@@ -23,27 +23,6 @@ cdef bytes_from_cstring(s):
     return s.encode('UTF-8')
 
 
-cdef cstring_to_str(const char*cstr):
-    """Return a python copy of the given C string, after free()ing source
-
-    This assumes that the argument was specifically malloc’d for the caller to
-    free.
-    """
-    cdef bytes b
-    try:
-        b = cstr  # copy happens here
-        return b.decode('UTF-8')
-    finally:
-        free(<void*> cstr)
-
-
-cdef std_string_to_str(std_string s):
-    """Return a python copy of std::string s"""
-
-    # strdup malloc()s, then cstring_to_str() free()s
-    return cstring_to_str(strdup(s.c_str()))
-
-
 ### Now, the definitions for the C++ code
 
 

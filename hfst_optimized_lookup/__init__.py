@@ -1,8 +1,8 @@
 from ._types import Analysis
-from . import _hfstol
+from . import _hfst_optimized_lookup
 
 __all__ = ["TransducerFile", "Analysis"]
 
 __version__ = "0.0.10.dev0"
 
-TransducerFile = _hfstol.PyTransducerFile
+TransducerFile = _hfst_optimized_lookup.PyTransducerFile
