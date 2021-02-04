@@ -5,6 +5,8 @@ from libc.string cimport strdup
 from libcpp.string cimport string as std_string
 from libcpp.vector cimport vector
 
+from ._types import Analysis
+
 ### String utilities
 # These would go into a separate .pyx file if I could get that to compile
 
@@ -49,6 +51,10 @@ cdef class PyTransducerFile:
     def lookup(self, string):
         return [''.join(x) for x in self.lookup_symbols(string)]
 
+    def lookup_lemma_with_affixes(self, surface_form):
+        raw_analyses =  self.lookup_symbols(surface_form)
+        return [_parse_analysis(a) for a in raw_analyses]
+
     def bulk_lookup(self, words):
         ret = {}
         for w in words:
@@ -58,3 +64,23 @@ cdef class PyTransducerFile:
     def __dealloc__(self):
         del self.c_tf
 
+
+def _parse_analysis(letters_and_tags):
+    prefix_tags = []
+    lemma_chars = []
+    suffix_tags = []
+
+    # Where should the multicharacter symbols go?  Initially, they are appended prefix
+    # tags, but as soon as one "lemma" symbol is seen, the tags should be appeneded to
+    # the suffix tags.
+    tag_destination = prefix_tags
+
+    for symbol in letters_and_tags:
+        if len(symbol) == 1:
+            lemma_chars.append(symbol)
+            tag_destination = suffix_tags
+        else:
+            assert len(symbol) > 1
+            tag_destination.append(symbol)
+
+    return Analysis(tuple(prefix_tags), "".join(lemma_chars), tuple(suffix_tags))
