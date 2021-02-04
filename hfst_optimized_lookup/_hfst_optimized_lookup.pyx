@@ -69,14 +69,18 @@ def _parse_analysis(letters_and_tags):
     prefix_tags = []
     lemma_chars = []
     suffix_tags = []
-    affixes = prefix_tags
+
+    # Where should the multicharacter symbols go?  Initially, they are appended prefix
+    # tags, but as soon as one "lemma" symbol is seen, the tags should be appeneded to
+    # the suffix tags.
+    tag_destination = prefix_tags
 
     for symbol in letters_and_tags:
         if len(symbol) == 1:
-            affixes = suffix_tags
             lemma_chars.append(symbol)
+            tag_destination = suffix_tags
         else:
             assert len(symbol) > 1
-            affixes.append(symbol)
+            tag_destination.append(symbol)
 
     return Analysis(tuple(prefix_tags), "".join(lemma_chars), tuple(suffix_tags))
