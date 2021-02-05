@@ -1,19 +1,49 @@
 # hfst-optimized-lookup
 
+[![PyPI version](https://img.shields.io/pypi/v/hfst-optimized-lookup)](https://pypi.org/project/hfst-optimized-lookup/)
+
 A pip-installable library version of [hfst-optimized-lookup][], originally
 built for [itwêwina][].
 
-    $ pip install hfst-optimized-lookup
+## Install
+
+    pip install hfst-optimized-lookup
+
+### Usage
+
+Import the library:
 
     >>> import hfst_optimized_lookup
+
+Then load an FST!
+
     >>> fst = hfst_optimized_lookup.TransducerFile('crk-relaxed-analyzer-for-dictionary.hfstol')
+
+> Hint: [Download `crk-relaxed-analyzer-for-dictionary.hfstol`][example-fst]
+> to follow along!
+
+Do an ordinary lookup, to get a list of _concatenated analyses_ for a wordform:
+
     >>> fst.lookup('atim')
     ['atim+N+A+Sg', 'atimêw+V+TA+Imp+Imm+2Sg+3SgO']
+
+Or get each _parsed analyses_ from the wordform
+
+    >>> analysis = fst.lookup_lemma_with_affixes('atim')[0]
+    >>> analysis.lemma
+    'atim'
+    >>> analysis.suffixes
+    ('+N', '+A', '+Sg')
+
+You can also lookup the analyses with symbols separated:
+
     >>> fst.lookup_symbols('atim')
     [['a', 't', 'i', 'm', '+N', '+A', '+Sg'], ['a', 't', 'i', 'm', 'ê', 'w', '+V', '+TA', '+Imp', '+Imm', '+2Sg', '+3SgO']]
 
+
 [itwêwina]: https://itwewina.dev
 [hfst-optimized-lookup]: https://github.com/hfst/hfst/blob/master/tools/src/hfst-optimized-lookup.cc
+[example-fst]: https://github.com/UAlbertaALTLab/hfst-optimized-lookup/releases/download/v0.0.10/crk-relaxed-analyzer-for-dictionary.hfstol
 
 [hfst] is a great toolkit with all sorts of functionality, and is
 indispensable for building FSTs, but for Python applications that just want
