@@ -12,6 +12,7 @@ black = "*"
 twine = "*"
 mypy = ">=0.800"
 pytest-mypy = "*"
+sphinx = "*"
 
 [requires]
 python_version = "3.9"
