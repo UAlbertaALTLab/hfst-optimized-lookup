@@ -11,6 +11,10 @@ SONAME = hfst_optimized_lookup/_hfst_optimized_lookup$(EXT_SUFFIX)
 test: $(SONAME) crk-relaxed-analyzer-for-dictionary.hfstol
 	pytest --mypy -s --doctest-glob=README.md
 
+.PHONY: docs
+docs: $(SONAME)
+	$(MAKE) -C docs html
+
 .PHONY: all
 all: test hfst-optimized-lookup
 

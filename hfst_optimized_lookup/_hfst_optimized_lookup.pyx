@@ -35,6 +35,10 @@ cdef extern from "hfst-optimized-lookup.h":
 
 
 cdef class PyTransducerFile:
+    """
+    Load and use a .hfstol transducer file.
+    """
+
     cdef TransducerFile* c_tf # pointer to the C++ instance we're wrapping
 
     def __cinit__(self, path):
@@ -42,20 +46,43 @@ cdef class PyTransducerFile:
         self.c_tf = new TransducerFile(bytes_from_cstring(path))
 
     def symbol_count(self):
+        """
+        :return: the number of symbols in the sigma (the symbol table).
+        :rtype: int
+        """
         return self.c_tf.symbol_count()
 
     def lookup_symbols(self, string):
+        """
+        TODO
+
+        :param str string: The string to lookup.
+        :return:
+        """
         cdef vector[vector[std_string]] results = self.c_tf.lookup(bytes_from_cstring(string))
         return [[x.decode('UTF-8') for x in y] for y in results]
 
     def lookup(self, string):
+        """
+        :return: list of possible analyses as concatenated strings, or an empty list if
+            there are no analyses.
+        :rtype: list
+        """
         return [''.join(x) for x in self.lookup_symbols(string)]
 
     def lookup_lemma_with_affixes(self, surface_form):
+        """
+        :return: list of possible analyses as :py:class:`hfst_optimized_lookup.Analysis`
+            objects, or an empty list if there are no analyses.
+        :rtype: list of :py:class:`hfst_optimized_lookup.Analysis`
+        """
         raw_analyses =  self.lookup_symbols(surface_form)
         return [_parse_analysis(a) for a in raw_analyses]
 
     def bulk_lookup(self, words):
+        """
+        Stub
+        """
         ret = {}
         for w in words:
             ret[w] = set(self.lookup(w))
