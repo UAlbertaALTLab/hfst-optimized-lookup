@@ -5,7 +5,9 @@ from libc.string cimport strdup
 from libcpp.string cimport string as std_string
 from libcpp.vector cimport vector
 
+from .TransducerFile cimport TransducerFile as CppTransducerFile
 from ._types import Analysis
+
 
 ### String utilities
 # These would go into a separate .pyx file if I could get that to compile
@@ -22,21 +24,9 @@ cdef bytes_from_cstring(s):
     return s.encode('UTF-8')
 
 
-### Now, the definitions for the C++ code
-
-
-cdef extern from "hfst-optimized-lookup.h":
-    cdef cppclass TransducerFile:
-        # docs on `except +`: “Without this declaration, C++ exceptions
-        # originating from the constructor will not be handled by Cython.”
-        TransducerFile(const char* path) except +
-        int symbol_count() except +
-        vector[vector[std_string]] lookup(const char* input_string) except +
-
-
-cdef class PyTransducerFile:
+cdef class TransducerFile:
     """
-    PyTransducerFile(path)
+    TransducerFile(path)
 
     Load an ``.hfstol`` transducer file.
 
@@ -60,11 +50,11 @@ cdef class PyTransducerFile:
     :type path: str or os.PathLike
     """
 
-    cdef TransducerFile* c_tf # pointer to the C++ instance we're wrapping
+    cdef CppTransducerFile* c_tf # pointer to the C++ instance we're wrapping
 
     def __cinit__(self, path):
         path = os.fspath(path)
-        self.c_tf = new TransducerFile(bytes_from_cstring(path))
+        self.c_tf = new CppTransducerFile(bytes_from_cstring(path))
 
     def symbol_count(self):
         """

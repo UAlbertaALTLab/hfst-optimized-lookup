@@ -1,5 +1,5 @@
 from ._types import Analysis
-from ._hfst_optimized_lookup import PyTransducerFile as TransducerFile
+from ._hfst_optimized_lookup import TransducerFile
 
 __all__ = ["TransducerFile", "Analysis"]
 
