@@ -27,7 +27,7 @@ Do an ordinary lookup, to get a list of _concatenated analyses_ for a wordform:
     >>> fst.lookup('atim')
     ['atim+N+A+Sg', 'atimêw+V+TA+Imp+Imm+2Sg+3SgO']
 
-Or get each _parsed analyses_ from the wordform
+Or get each _parsed analysis_ from the wordform
 
     >>> analysis = fst.lookup_lemma_with_affixes('atim')[0]
     >>> analysis.lemma
