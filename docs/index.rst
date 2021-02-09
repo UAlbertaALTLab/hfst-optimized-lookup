@@ -34,13 +34,10 @@ Usage
 
     # Now you can .lookup() in the FST to your heart's content!
 
-See :py:class:`hfst_optimized_lookup._hfst_optimized_lookup.PyTransducerFile` for further usage.
+See :py:class:`hfst_optimized_lookup.TransducerFile` for further usage.
 
 API Documentation
 =================
-
-.. autoclass:: hfst_optimized_lookup._hfst_optimized_lookup.PyTransducerFile
-   :members:
 
 .. automodule:: hfst_optimized_lookup
    :members:
