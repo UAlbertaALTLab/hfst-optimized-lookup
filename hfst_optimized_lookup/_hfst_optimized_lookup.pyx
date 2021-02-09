@@ -24,9 +24,9 @@ cdef bytes_from_cstring(s):
     return s.encode('UTF-8')
 
 
-cdef class PyTransducerFile:
+cdef class TransducerFile:
     """
-    PyTransducerFile(path)
+    TransducerFile(path)
 
     Load an ``.hfstol`` transducer file.
 
