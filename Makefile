@@ -13,7 +13,7 @@ test: $(SONAME) crk-relaxed-analyzer-for-dictionary.hfstol
 
 .PHONY: docs
 docs: $(SONAME)
-	$(MAKE) -C docs html
+	pipenv run $(MAKE) -C docs html
 
 .PHONY: all
 all: test hfst-optimized-lookup
