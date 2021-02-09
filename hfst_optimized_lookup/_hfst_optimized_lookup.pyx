@@ -1,7 +1,5 @@
 import os
 
-from libc.stdlib cimport malloc, free
-from libc.string cimport strdup
 from libcpp.string cimport string as std_string
 from libcpp.vector cimport vector
 
