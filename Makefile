@@ -24,6 +24,7 @@ all: test hfst-optimized-lookup
 # If any files are out of date, let setup.py handle it
 $(SONAME): \
     setup.py \
+    hfst_optimized_lookup/TransducerFile.pxd \
     hfst_optimized_lookup/_hfst_optimized_lookup.pyx \
     hfst_optimized_lookup/hfst-optimized-lookup.cc \
     hfst_optimized_lookup/hfst-optimized-lookup.h \
