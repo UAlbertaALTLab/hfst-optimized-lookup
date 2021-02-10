@@ -3,49 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-hfst-optimized-lookup for Python
-================================
-
-A pip-installable library version of hfst-optimized-lookup_, originally
-built for itwêwina_.
-
-.. _itwêwina: https://itwewina.dev/
-.. _hfst-optimized-lookup: https://github.com/hfst/hfst/blob/master/tools/src/hfst-optimized-lookup.cc
+.. mdinclude:: ../README.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-Install
--------
-
-.. code-block:: bash
-
-    pip install hfst-optimized-lookup
-
-Usage
------
-
-.. code-block:: python
-
-    from hfst_optimized_lookup import TransducerFile
-
-    fst = TransducerFile("path/to/transducer.hfstol")
-
-    # Now you can .lookup() in the FST to your heart's content!
-
-See :py:class:`hfst_optimized_lookup.TransducerFile` for further usage.
-
-API Documentation
-=================
-
-.. automodule:: hfst_optimized_lookup
-   :members:
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
+   api
+   indices

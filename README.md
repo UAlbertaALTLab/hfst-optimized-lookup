@@ -1,11 +1,13 @@
-# hfst-optimized-lookup
+hfst-optimized-lookup
+=====================
 
 [![PyPI version](https://img.shields.io/pypi/v/hfst-optimized-lookup)](https://pypi.org/project/hfst-optimized-lookup/)
 
 A pip-installable library version of [hfst-optimized-lookup][], originally
 built for [itwêwina][].
 
-## Install
+Install
+-------
 
     pip install hfst-optimized-lookup
 
@@ -57,7 +59,8 @@ Among other benefits, this package can return lists of individual symbols,
 including Multichar_Symbols, so that you don’t have to guess or try to
 parse out which parts of the analysis are tags.
 
-## Acknowledgements
+Acknowledgements
+----------------
 
 Thank you to:
 
