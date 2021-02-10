@@ -10,7 +10,11 @@ Install
 -------
 
     pip install hfst-optimized-lookup
+This requires that the machine running `pip` have a working C++ compiler. If
+enough people ask for us to upload [binary ‘wheels’] so that you don’t need a
+compiler at install time, we could start doing so.
 
+[binary ‘wheels’]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#wheels
 ### Usage
 
 Import the library:
