@@ -2,8 +2,12 @@
 /dist/
 __pycache__/
 
-# Shared object files (compilation)
+# Sphinx docs
+docs/_build
+
+# Build artifacts
 *.so
+*.egg-info/
 
 # cython-generated
 hfst_optimized_lookup/_hfst_optimized_lookup.cpp
@@ -12,3 +16,4 @@ hfst_optimized_lookup/_hfst_optimized_lookup.cpp
 hfst-optimized-lookup
 
 *.hfstol
+

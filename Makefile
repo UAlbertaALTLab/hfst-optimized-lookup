@@ -11,6 +11,10 @@ SONAME = hfst_optimized_lookup/_hfst_optimized_lookup$(EXT_SUFFIX)
 test: $(SONAME) crk-relaxed-analyzer-for-dictionary.hfstol
 	pytest --mypy -s --doctest-glob=README.md
 
+.PHONY: docs
+docs: $(SONAME)
+	pipenv run $(MAKE) -C docs html
+
 .PHONY: all
 all: test hfst-optimized-lookup
 
@@ -20,6 +24,7 @@ all: test hfst-optimized-lookup
 # If any files are out of date, let setup.py handle it
 $(SONAME): \
     setup.py \
+    hfst_optimized_lookup/TransducerFile.pxd \
     hfst_optimized_lookup/_hfst_optimized_lookup.pyx \
     hfst_optimized_lookup/hfst-optimized-lookup.cc \
     hfst_optimized_lookup/hfst-optimized-lookup.h \

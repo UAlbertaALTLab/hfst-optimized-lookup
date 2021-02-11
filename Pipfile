@@ -12,6 +12,9 @@ black = "*"
 twine = "*"
 mypy = ">=0.800"
 pytest-mypy = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
+m2r2 = "*"
 
 [requires]
 python_version = "3.9"
