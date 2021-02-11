@@ -13,7 +13,7 @@ class Analysis(NamedTuple):
 
     >>> analysis.lemma
     'wâpamêw'
-    >>> analysis.preverbs
+    >>> analysis.prefixes
     ('PV/e+',)
     >>> analysis.suffixes
     ('+V', '+TA', '+Cnj', '+3Sg', '+4Sg/PlO')
