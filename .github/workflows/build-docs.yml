@@ -44,7 +44,7 @@ jobs:
     - run: pip install pipenv
     - run: pipenv install --dev
     - run: pipenv run make docs
-    - run: cp -R main/docs/_build/html/* gh-pages
+    - run: cp -a docs/_build/html/. ${GITHUB_WORKSPACE}/gh-pages/
 
     # Commit and push!
     - uses: EndBug/add-and-commit@v7
