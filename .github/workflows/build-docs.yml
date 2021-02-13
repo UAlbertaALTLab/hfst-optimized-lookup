@@ -1,0 +1,53 @@
+name: Build and Publish Sphinx Documentation
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  # always run commands in the main repository:
+  run:
+    working-directory: main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    # Clones the repo TWICE, once for each branch: main and gh-pages
+    #
+    # Will build in "main" and then copy JUST THE HTML to "gh-pages"!
+    #
+    # .
+    # ├── gh-pages        (destination)
+    # │   └── index.html
+    # └── main            (source)
+    #     └── docs
+    #         └── _build
+    #             └── html
+    #                 └── index.html
+
+    steps:
+    - name: Checkout main
+      uses: actions/checkout@v2
+      with:
+        path: main
+    - name: Checkout documentation branch
+      uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: gh-pages
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    # Build
+    - run: pip install pipenv
+    - run: pipenv install --dev
+    - run: pipenv run make docs
+    - run: cp -R main/docs/_build/html/* gh-pages
+
+    # Commit and push!
+    - uses: EndBug/add-and-commit@v7
+      with:
+        cwd: gh-pages
+        branch: gh-pages
