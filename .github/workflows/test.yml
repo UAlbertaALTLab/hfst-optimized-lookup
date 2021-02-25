@@ -22,18 +22,8 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      # Mostly borrowed from https://github.com/actions/cache/blob/main/examples.md#python---pipenv
-      - id: cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv${{ matrix.python }}-${{ hashFiles('Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv${{ matrix.python }}-
-
       - run: pip install pipenv
 
       - run: pipenv install --dev
-        if: steps.cache.outputs.cache-hit != 'true'
 
       - run: pipenv run make test
