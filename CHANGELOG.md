@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+  - Important bug fix: when encountering an input symbol which was not in
+    the FST, e.g., `v` in Cree, `lookup()` would return analyses for the
+    input up to that point, e.g., `avocado` → `a` → `['å+Ipc+Interj']`. An
+    empty list is now returned instead for invalid inputs.
+
+  - Check in release script
+
 ## v0.0.10 2021-02-04
 
   - Added: `TransducerFile.lookup_lemma_with_affixes()` which returns
