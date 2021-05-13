@@ -140,11 +140,13 @@ std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_
       int i = 0;
       SymbolNumber k = NO_SYMBOL_NUMBER;
 
+      bool tokenization_failed = false;
       for ( const char ** Str = &input_text; **Str != 0; )
         {
           k = transducer->find_next_key(Str);
           if (k == NO_SYMBOL_NUMBER)
             {
+                tokenization_failed = true;
               break;
             }
           input_string[i] = k;
@@ -154,6 +156,10 @@ std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_
       transducer->analyze(input_string);
 
       std::vector<std::vector<std::string> > output;
+      if (tokenization_failed) {
+          // Return empty output vector
+          return output;
+      }
 
       Transducer* t = dynamic_cast<Transducer*>(transducer);
       if (t) {

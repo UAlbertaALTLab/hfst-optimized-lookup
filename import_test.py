@@ -28,6 +28,11 @@ def test_subsequent_lookups(fst: TransducerFile) -> None:
     assert fst.lookup("nikî-nipân") == ["PV/ki+nipâw+V+AI+Ind+1Sg"]
 
 
+def test_valid_lookup_with_invalid_symbol(fst: TransducerFile) -> None:
+    assert fst.lookup("avocado") == []
+    assert fst.lookup("navajo") == []
+
+
 def test_multiple_analyses(fst: TransducerFile) -> None:
     assert fst.lookup("môswa") == ["môswa+N+A+Sg", "môswa+N+A+Obv"]
 
