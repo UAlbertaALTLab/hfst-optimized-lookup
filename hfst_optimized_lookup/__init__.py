@@ -3,4 +3,4 @@ from ._hfst_optimized_lookup import TransducerFile
 
 __all__ = ["TransducerFile", "Analysis"]
 
-__version__ = "0.0.11.dev0"
+__version__ = "0.0.11"

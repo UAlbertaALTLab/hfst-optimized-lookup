@@ -1,6 +1,6 @@
 # hfst-optimized-lookup changelog
 
-## Unreleased
+## v0.0.11 2021-05-13
 
   - Important bug fix: when encountering an input symbol which was not in
     the FST, e.g., `v` in Cree, `lookup()` would return analyses for the
