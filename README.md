@@ -2,6 +2,7 @@ hfst-optimized-lookup
 =====================
 
 [![PyPI version](https://img.shields.io/pypi/v/hfst-optimized-lookup)](https://pypi.org/project/hfst-optimized-lookup/)
+[![Documentation](https://github.com/UAlbertaALTLab/hfst-optimized-lookup/actions/workflows/build-docs.yml/badge.svg)](https://ualbertaaltlab.github.io/hfst-optimized-lookup/)
 
 A pip-installable library version of [hfst-optimized-lookup][], originally
 built for [itwêwina][].
@@ -16,6 +17,8 @@ compiler at install time, we could start doing so.
 
 [binary ‘wheels’]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#wheels
 ### Usage
+
+> [Full API Documentation](https://ualbertaaltlab.github.io/hfst-optimized-lookup/api.html)
 
 Import the library:
 
