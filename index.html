@@ -223,27 +223,16 @@ application suite</p></li>
 </div>
 <div class="section" id="releasing">
 <h2>Releasing<a class="headerlink" href="#releasing" title="Permalink to this headline">¶</a></h2>
-<p>(The script that automates the following is still a work in progress.)</p>
-<p>Prepare release:</p>
-<ul class="simple">
-<li><p>Remove <code class="docutils literal notranslate"><span class="pre">.dev0</span></code> suffix from <code class="docutils literal notranslate"><span class="pre">__version__</span></code> in
-<code class="docutils literal notranslate"><span class="pre">hfst_optimized_lookup/__init__.py</span></code></p></li>
-<li><p>Update <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code>, changing “Unreleased” to release version and
-adding date</p></li>
-</ul>
-<p>Release:</p>
-<ul class="simple">
-<li><p>run tests</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">sdist</span></code></p></li>
-<li><p>Commit, tag, and push</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">twine</span> <span class="pre">upload</span> <span class="pre">dist/hfst-optimized-lookup-$VERSION.tar.gz</span></code></p></li>
-</ul>
-<p>Prepare for further development</p>
-<ul class="simple">
-<li><p>Increment <code class="docutils literal notranslate"><span class="pre">__version__</span></code>, adding <code class="docutils literal notranslate"><span class="pre">.dev0</span></code> suffix</p></li>
-<li><p>Add “Unreleased” header in <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code></p></li>
-<li><p>Commit and push</p></li>
-</ul>
+<p>Run <code class="docutils literal notranslate"><span class="pre">./release.py</span> <span class="pre">--help</span></code> for details of the release process.</p>
+<p>A typical release is:</p>
+<ol class="arabic">
+<li><p>Make sure the “Unreleased” section of <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> is up-to-date</p></li>
+<li><p>Run the script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">release</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">release</span><span class="o">-</span><span class="n">timezone</span><span class="o">=</span><span class="n">America</span><span class="o">/</span><span class="n">Edmonton</span> <span class="o">--</span><span class="n">push</span> <span class="o">--</span><span class="n">release</span>
+</pre></div>
+</div>
+</li>
+</ol>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
