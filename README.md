@@ -78,24 +78,12 @@ Thank you to:
 
 ## Releasing
 
-(The script that automates the following is still a work in progress.)
+Run `./release.py --help` for details of the release process.
 
-Prepare release:
+A typical release is:
 
-  - Remove `.dev0` suffix from `__version__` in
-    `hfst_optimized_lookup/__init__.py`
-  - Update `CHANGELOG.md`, changing “Unreleased” to release version and
-    adding date
+ 1. Make sure the “Unreleased” section of `CHANGELOG.md` is up-to-date
 
-Release:
+ 2. Run the script:
 
-  - run tests
-  - `python3 setup.py sdist`
-  - Commit, tag, and push
-  - `python3 -m twine upload dist/hfst-optimized-lookup-$VERSION.tar.gz`
-
-Prepare for further development
-
-  - Increment `__version__`, adding `.dev0` suffix
-  - Add “Unreleased” header in `CHANGELOG.md`
-  - Commit and push
+        ./release.py --release-timezone=America/Edmonton --push --release
