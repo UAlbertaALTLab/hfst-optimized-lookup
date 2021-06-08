@@ -2,6 +2,15 @@ on:
   pull_request:
   push:
   schedule:
+    # Warning: GitHub will *stop running scheduled tests* if the repository
+    # has no activity for 60 days. A button will then appear under the
+    # actions tab in the web interface, allowing re-enabling of the action.
+    #
+    # Now that I know this, I have to wait 60 days to see if this inactive
+    # state can be read and toggled via the GitHub API. Otherwise, I guess
+    # one workaround could be to have the workflow automatically add a
+    # placeholder commit if there have been no commits for 30 days?
+    #
     # * is a special character in YAML so you have to quote this string
     - cron:  '05 16 * * *'
 
