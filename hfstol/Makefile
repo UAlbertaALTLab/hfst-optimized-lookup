@@ -13,9 +13,11 @@ build:
 test: build
 	npx mocha
 
-bootstrap: hfst-optimized-lookup.cc hfst-optimized-lookup.h
+bootstrap: hfst-optimized-lookup.cc hfst-optimized-lookup.h LICENSE
 
 hfst-optimized-lookup.cc: ../hfst_optimized_lookup/hfst-optimized-lookup.cc
 	cp $< $@
 hfst-optimized-lookup.h: ../hfst_optimized_lookup/hfst-optimized-lookup.h
+	cp $< $@
+LICENSE: ../LICENSE
 	cp $< $@
