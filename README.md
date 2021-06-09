@@ -50,7 +50,7 @@ You can also lookup the analyses with symbols separated:
     [['a', 't', 'i', 'm', '+N', '+A', '+Sg'], ['a', 't', 'i', 'm', 'ê', 'w', '+V', '+TA', '+Imp', '+Imm', '+2Sg', '+3SgO']]
 
 
-[itwêwina]: https://itwewina.dev
+[itwêwina]: https://itwewina.altlab.app
 [hfst-optimized-lookup]: https://github.com/hfst/hfst/blob/master/tools/src/hfst-optimized-lookup.cc
 [example-fst]: https://github.com/UAlbertaALTLab/hfst-optimized-lookup/releases/download/v0.0.10/crk-relaxed-analyzer-for-dictionary.hfstol
 

@@ -19,7 +19,8 @@ docs: $(SONAME)
 all: test hfst-optimized-lookup
 
 %.hfstol:
-	wget "https://github.com/UAlbertaALTLab/cree-intelligent-dictionary/raw/master/CreeDictionary/res/fst/$@"
+	./mini-lfs-client.py UAlbertaALTLab cree-intelligent-dictionary \
+		src/crkeng/resources/fst/crk-relaxed-analyzer-for-dictionary.hfstol
 
 # If any files are out of date, let setup.py handle it
 $(SONAME): \

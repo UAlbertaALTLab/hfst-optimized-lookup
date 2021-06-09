@@ -1,3 +1,5 @@
+# type: ignore
+
 from datetime import date
 from io import StringIO
 from textwrap import dedent
