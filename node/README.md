@@ -13,9 +13,17 @@ built for [itwêwina][].
 ## Usage
 
     const { Transducer } = require('hfstol');
-    const fst = Transducer('crk-analyzer.hfstol');
+    const fst = new Transducer('crk-analyzer.hfstol');
     fst.lookup('atim')
     // ⇒ ["atim+N+A+Sg", "atimêw+V+TA+Imp+Imm+2Sg+3SgO"]
+    fst.lookup_symbols('atim')
+    // ⇒ [["a", "t", "i", "m", "+N", "+A", "+Sg"],
+    //    ["a", "t", "i", "m", "ê", "w", "+V", "+TA", "+Imp", "+Imm", "+2Sg", "+3SgO"]]
+    fst.lookup_lemma_with_affixes('atim')
+    // ⇒ [
+    //     [[], "atim", ["+N", "+A", "+Sg"]],
+    //     [[], "atimêw", ["+V", "+TA", "+Imp", "+Imm", "+2Sg", "+3SgO"]],
+    //   ];
 
 ## Development notes
 

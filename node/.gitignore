@@ -3,4 +3,3 @@ yarn.lock
 hfst-optimized-lookup.cc
 hfst-optimized-lookup.h
 /build/
-LICENSE

@@ -3,16 +3,17 @@ SHELL = /bin/bash -eu
 .SECONDARY:
 .SUFFIXES:
 
-.PHONY: all test python clean
-all: test python
+.PHONY: all test python node clean
+all: test python node
 
-python:
+python: crk-relaxed-analyzer-for-dictionary.hfstol
 	$(MAKE) -C python
 
-test:: crk-relaxed-analyzer-for-dictionary.hfstol
-	$(MAKE) -C python test
 clean::
 	$(MAKE) -C python clean
+
+node: crk-relaxed-analyzer-for-dictionary.hfstol
+	$(MAKE) -C node
 
 %.hfstol:
 	./mini-lfs-client.py UAlbertaALTLab cree-intelligent-dictionary \

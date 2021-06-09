@@ -6,6 +6,7 @@ built for [itwêwina][].
 
 Languages currently supported:
   - [python](python)
+  - [NodeJS](node)
 
 [hfst] is a great toolkit with all sorts of functionality, and is
 indispensable for building FSTs, but for various applications that only
