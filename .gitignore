@@ -10,7 +10,7 @@ docs/_build
 *.egg-info/
 
 # cython-generated
-hfst_optimized_lookup/_hfst_optimized_lookup.cpp
+python/hfst_optimized_lookup/_hfst_optimized_lookup.cpp
 
 # executable
 hfst-optimized-lookup

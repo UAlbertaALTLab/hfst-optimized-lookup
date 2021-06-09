@@ -5,7 +5,7 @@ import pytest
 import hfst_optimized_lookup
 from hfst_optimized_lookup import TransducerFile, Analysis
 
-TEST_FST = "crk-relaxed-analyzer-for-dictionary.hfstol"
+TEST_FST = "../crk-relaxed-analyzer-for-dictionary.hfstol"
 
 
 # scope="session" reuses the FST for all tests that use this fixture

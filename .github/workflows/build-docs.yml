@@ -43,8 +43,8 @@ jobs:
     # Build
     - run: pip install pipenv
     - run: pipenv install --dev
-    - run: pipenv run make docs
-    - run: cp -a docs/_build/html/. ${GITHUB_WORKSPACE}/gh-pages/
+    - run: pipenv run make -C python docs
+    - run: cp -a python/docs/_build/html/. ${GITHUB_WORKSPACE}/gh-pages/
 
     # Commit and push!
     - uses: EndBug/add-and-commit@v7
