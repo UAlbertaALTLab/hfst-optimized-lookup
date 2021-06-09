@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "Apache-2.0",
   "description": "JS bindings for hfst-optimized-lookup",
+  "homepage": "https://github.com/UAlbertaALTLab/hfst-optimized-lookup/tree/main/node",
   "dependencies": {
     "bindings": "^1.5.0",
     "node-addon-api": "^3.2.1"
