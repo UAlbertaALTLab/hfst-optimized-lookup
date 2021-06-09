@@ -253,6 +253,7 @@ int main(int argc, char **argv)
 
         case 'e':
           echoInputsFlag = true;
+          break;
 
         case 'w':
           displayWeightsFlag = true;
@@ -518,7 +519,7 @@ void Encoder::read_input_symbols(KeyTable * kt)
 
 SymbolNumber Encoder::find_key(const char ** p)
 {
-  if (ascii_symbols[(unsigned const char)(**p)] == NO_SYMBOL_NUMBER)
+  if (ascii_symbols[(unsigned char)(**p)] == NO_SYMBOL_NUMBER)
     {
       return letters.find_key(p);
     }

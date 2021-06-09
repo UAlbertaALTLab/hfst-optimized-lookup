@@ -19,7 +19,10 @@ clean::
 		src/crkeng/resources/fst/$@
 
 test:: hfst-optimized-lookup crk-relaxed-analyzer-for-dictionary.hfstol
-	echo atim | ./hfst-optimized-lookup -f crk-relaxed-analyzer-for-dictionary.hfstol
+	echo atim \
+		| ./hfst-optimized-lookup \
+			-f crk-relaxed-analyzer-for-dictionary.hfstol \
+		| grep atimêw+V+TA+Imp+Imm+2Sg+3SgO
 clean::
 	rm -f crk-relaxed-analyzer-for-dictionary.hfstol
 
