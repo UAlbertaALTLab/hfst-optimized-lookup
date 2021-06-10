@@ -4,6 +4,9 @@ hfst-optimized-lookup
 Installable package versions of [hfst-optimized-lookup][], originally
 built for [itwêwina][].
 
+[itwêwina]: https://itwewina.altlab.app
+[hfst-optimized-lookup]: https://github.com/hfst/hfst/blob/master/tools/src/hfst-optimized-lookup.cc
+
 Languages currently supported:
   - [python](python)
 
