@@ -177,12 +177,14 @@ compiler at install time, we could start doing so.</p>
 </pre></div>
 </div>
 <p>Then load an FST!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fst</span> <span class="o">=</span> <span class="n">hfst_optimized_lookup</span><span class="o">.</span><span class="n">TransducerFile</span><span class="p">(</span><span class="s1">&#39;crk-relaxed-analyzer-for-dictionary.hfstol&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fst</span> <span class="o">=</span> <span class="n">hfst_optimized_lookup</span><span class="o">.</span><span class="n">TransducerFile</span><span class="p">(</span><span class="s1">&#39;../crk-relaxed-analyzer-for-dictionary.hfstol&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <blockquote>
-<div><p>Hint: <cite>Download ``crk-relaxed-analyzer-for-dictionary.hfstol`</cite> &lt;<a class="reference external" href="https://github.com/UAlbertaALTLab/hfst-optimized-lookup/releases/download/v0.0.10/crk-relaxed-analyzer-for-dictionary.hfstol">https://github.com/UAlbertaALTLab/hfst-optimized-lookup/releases/download/v0.0.10/crk-relaxed-analyzer-for-dictionary.hfstol</a>&gt;`_
-to follow along!</p>
+<div><p>Hint: Download <code class="docutils literal notranslate"><span class="pre">crk-relaxed-analyzer-for-dictionary.hfstol</span></code> by cloning
+<a class="reference external" href="https://github.com/UAlbertaALTLab/cree-intelligent-dictionary/tree/main/src/crkeng/resources/fst">https://github.com/UAlbertaALTLab/cree-intelligent-dictionary/tree/main/src/crkeng/resources/fst</a>
+to follow along! The file itself is stored in Git LFS so is tricky to
+link to directly.</p>
 </div></blockquote>
 <p>Do an ordinary lookup, to get a list of <em>concatenated analyses</em> for a wordform:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fst</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;atim&#39;</span><span class="p">)</span>
@@ -202,24 +204,7 @@ to follow along!</p>
 <span class="go">[[&#39;a&#39;, &#39;t&#39;, &#39;i&#39;, &#39;m&#39;, &#39;+N&#39;, &#39;+A&#39;, &#39;+Sg&#39;], [&#39;a&#39;, &#39;t&#39;, &#39;i&#39;, &#39;m&#39;, &#39;ê&#39;, &#39;w&#39;, &#39;+V&#39;, &#39;+TA&#39;, &#39;+Imp&#39;, &#39;+Imm&#39;, &#39;+2Sg&#39;, &#39;+3SgO&#39;]]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://github.com/hfst/hfst">hfst</a> is a great toolkit with all sorts of functionality, and is
-indispensable for building FSTs, but for Python applications that just want
-to do hfst lookups, this package may be easier to use.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">hfst-optimized-lookup</span></code> binary is actually a standalone C++ program
-that doesn’t include or link against any other code in hfst, which makes it
-much easier to repackage as a small Python library.</p>
-<p>Among other benefits, this package can return lists of individual symbols,
-including Multichar_Symbols, so that you don’t have to guess or try to
-parse out which parts of the analysis are tags.</p>
 </div>
-</div>
-<div class="section" id="acknowledgements">
-<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
-<p>Thank you to:</p>
-<ul class="simple">
-<li><p>The authors of the <a class="reference external" href="https://github.com/hfst/hfst">Helsinki Finite-State Technology</a> library and
-application suite</p></li>
-</ul>
 </div>
 <div class="section" id="releasing">
 <h2>Releasing<a class="headerlink" href="#releasing" title="Permalink to this headline">¶</a></h2>
