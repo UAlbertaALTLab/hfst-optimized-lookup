@@ -56,7 +56,7 @@ class Transducer extends CppTransducer {
           // symbol is a character
           beforeDone = true;
           if (lemmaDone) {
-            throw Exception("Unable to parse into lemma and affixes");
+            throw Error(`Unable to parse ${analysis} into lemma and affixes`);
           }
 
           lemma += symbol;
