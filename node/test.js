@@ -1,8 +1,10 @@
+'use strict';
+
 const { Transducer } = require(".");
 const { expect } = require("chai");
 const { randomBytes } = require("crypto");
 
-DEFAULT_TRANSDUCER_FILE = "../crk-relaxed-analyzer-for-dictionary.hfstol";
+const DEFAULT_TRANSDUCER_FILE = "../crk-relaxed-analyzer-for-dictionary.hfstol";
 
 describe("hfstol-addon", function () {
   describe("with the Plains Cree FST", function () {
