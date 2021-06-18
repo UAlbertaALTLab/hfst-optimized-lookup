@@ -25,6 +25,16 @@ built for [itwêwina][].
     //     [[], "atimêw", ["+V", "+TA", "+Imp", "+Imm", "+2Sg", "+3SgO"]],
     //   ];
 
+## Windows support
+
+This package has been successfully run on Windows, but we do not currently
+include pre-built binaries in the npm package or test it in CI.
+
+You will need to follow the [NodeJS windows instructions] to install Python
+and C++ build tools for the package installation to succeed.
+
+[NodeJS windows instructions] https://github.com/nodejs/node-gyp#on-windows
+
 ## Development notes
 
 Largely based on the python version, the

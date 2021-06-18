@@ -525,7 +525,7 @@ SymbolNumber Encoder::find_key(const char ** p)
   return s;
 }
 
-#if MAIN
+#if BUILD_MAIN
 void runTransducer (TransducerBase * T)
 {
   SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
