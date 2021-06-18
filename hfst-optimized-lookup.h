@@ -30,8 +30,12 @@
   SO THE CURRENT STRUCTURE IS NOT SO GREAT. TODO: FIX THIS.
 */
 
-#ifndef _MSC_VER
+#ifdef _MSC_VER
+#  define BUILD_MAIN 0
+#  define hfst_fprintf_console fprintf
+#else
 #  include <getopt.h>
+#  define BUILD_MAIN 1
 #endif
 
 #include <cstdio>
@@ -317,8 +321,10 @@ public:
 typedef std::vector<ValueNumber> FlagDiacriticState;
 typedef std::vector<FlagDiacriticState> FlagDiacriticStateStack;
 
+#if BUILD_MAIN
 // GLOBAL FUNCTION, TODO: SUBSUME IN MAIN FOR SINGLE-FILE VERSION
 int setup(FILE * f);
+#endif
 
 /*
  * BEGIN old transducer.h

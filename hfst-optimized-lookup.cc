@@ -29,11 +29,6 @@
 //#  include <windows.h>
 //#endif
 
-#ifdef _MSC_VER
-#  include "hfst-string-conversions.h"
-using hfst::hfst_fprintf_console;
-#endif
-
 #include <cstdarg>
 #include <iostream> // DEBUG
 
@@ -179,7 +174,7 @@ std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_
       return output;
 }
 
-#ifndef _MSC_VER
+#if BUILD_MAIN
 int main(int argc, char **argv)
 {
 
@@ -530,6 +525,7 @@ SymbolNumber Encoder::find_key(const char ** p)
   return s;
 }
 
+#if MAIN
 void runTransducer (TransducerBase * T)
 {
   SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
@@ -625,6 +621,7 @@ void runTransducer (TransducerBase * T)
       T->printAnalyses(std::string(str));
     }
 }
+#endif
 
 TransducerBase * instantiateTransducer(FILE * f, TransducerHeader& header, TransducerAlphabet& alphabet)
 {
@@ -684,6 +681,7 @@ TransducerBase * instantiateTransducer(FILE * f, TransducerHeader& header, Trans
     throw std::runtime_error("should not happen");
 }
 
+#if BUILD_MAIN
 int setup(FILE * f)
 {
   try
@@ -704,6 +702,7 @@ int setup(FILE * f)
 
   return 0;
 }
+#endif
 
 /**
  * BEGIN old transducer.cc
