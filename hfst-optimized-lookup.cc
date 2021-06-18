@@ -179,6 +179,7 @@ std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_
       return output;
 }
 
+#ifndef _MSC_VER
 int main(int argc, char **argv)
 {
 
@@ -346,6 +347,7 @@ int main(int argc, char **argv)
       return EXIT_FAILURE;
     }
 }
+#endif
 
 void TransducerHeader::skip_hfst3_header(FILE * f)
 {

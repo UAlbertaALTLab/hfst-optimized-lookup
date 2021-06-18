@@ -30,9 +30,7 @@
   SO THE CURRENT STRUCTURE IS NOT SO GREAT. TODO: FIX THIS.
 */
 
-#ifdef _MSC_VER
-#  include "hfst-getopt.h"
-#else
+#ifndef _MSC_VER
 #  include <getopt.h>
 #endif
 
