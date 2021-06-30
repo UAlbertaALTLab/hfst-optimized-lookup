@@ -31,9 +31,11 @@
 */
 
 #ifdef _MSC_VER
-#  include "hfst-getopt.h"
+#  define BUILD_MAIN 0
+#  define hfst_fprintf_console fprintf
 #else
 #  include <getopt.h>
+#  define BUILD_MAIN 1
 #endif
 
 #include <cstdio>
@@ -319,8 +321,10 @@ public:
 typedef std::vector<ValueNumber> FlagDiacriticState;
 typedef std::vector<FlagDiacriticState> FlagDiacriticStateStack;
 
+#if BUILD_MAIN
 // GLOBAL FUNCTION, TODO: SUBSUME IN MAIN FOR SINGLE-FILE VERSION
 int setup(FILE * f);
+#endif
 
 /*
  * BEGIN old transducer.h
