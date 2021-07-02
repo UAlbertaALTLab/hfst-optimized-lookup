@@ -1,8 +1,6 @@
-'use strict';
-
-const { Transducer } = require(".");
-const { expect } = require("chai");
-const { randomBytes } = require("crypto");
+import { Transducer } from './index.js';
+import { expect } from 'chai';
+import { randomBytes } from 'crypto';
 
 const DEFAULT_TRANSDUCER_FILE = "../crk-relaxed-analyzer-for-dictionary.hfstol";
 

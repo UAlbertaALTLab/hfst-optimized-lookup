@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "declaration": true,
+    "lib": ["ES2020"],
+    "target": "esnext",
+    "noUnusedLocals": true
+  }
+}

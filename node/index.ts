@@ -1,16 +1,20 @@
-'use strict';
+import bindings from 'bindings';
+const addon = bindings('hfstol_addon');
 
-const addon = require('bindings')('hfstol_addon');
+interface CppTransducerInterface {
+  new(fstFilename: string): CppTransducerInterface;
+  _lookup_symbols(text: string): string[][]
+}
 
-const CppTransducer = addon.Transducer;
+const CppTransducer = addon.Transducer as CppTransducerInterface;
 
-class Transducer extends CppTransducer {
+export class Transducer extends CppTransducer {
   /**
    * Apply FST to text, returning array of analyses strings.
    *
    * E.g., lookup("atim") => ["atim+N+A+Sg", "atimêw+V+TA+Imp+Imm+2Sg+3SgO"]
    */
-  lookup_symbols(text) {
+  lookup_symbols(text: string) {
     if (arguments.length !== 1) {
       throw new Error("Wrong number of arguments");
     }
@@ -23,7 +27,7 @@ class Transducer extends CppTransducer {
    *
    * E.g., lookup("atim") => ["atim+N+A+Sg", "atimêw+V+TA+Imp+Imm+2Sg+3SgO"]
    */
-  lookup(text) {
+  lookup(text: string) {
     if (arguments.length !== 1) {
       throw new Error("Wrong number of arguments");
     }
@@ -42,8 +46,8 @@ class Transducer extends CppTransducer {
    * E.g., lookup_lemma_with_affixes("kî-atimik")) ⇒
    *    [[["PV/ki"], "atimêw", ["+V", "+TA", "+Ind", "+4Sg/Pl", "+3SgO"]]]
    */
-  lookup_lemma_with_affixes(text) {
-    const ret = [];
+  lookup_lemma_with_affixes(text: string) {
+    const ret: [string[], string, string[]][] = [];
     for (const analysis of this.lookup_symbols(text)) {
       const before = [];
       let beforeDone = false;
@@ -76,5 +80,3 @@ class Transducer extends CppTransducer {
     return ret;
   }
 }
-
-module.exports = { Transducer };

@@ -3,18 +3,25 @@ SHELL = /bin/bash -eu
 .SECONDARY:
 .SUFFIXES:
 
-.PHONY: all bootstrap build test
+.PHONY: all bootstrap build build-js build-c++ test
 
 all: test
 
 bootstrap:
-	if ! [ -d node_modules ]; then \
+	if ! [ -d node_modules ] || [ package.json -nt node_modules/.yarn-integrity ]; then \
 		yarn; \
 	fi
 clean::
 	rm -rf node_modules
 
-build: bootstrap
+build: build-js build-c++
+
+build-js: bootstrap
+	npx --no-install tsc
+clean::
+	rm -rf index.js index.d.ts
+
+build-c++: bootstrap build-js
 	npx node-gyp build
 clean::
 	rm -rf build
