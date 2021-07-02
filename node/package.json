@@ -1,6 +1,5 @@
 {
   "name": "hfstol",
-  "type": "module",
   "version": "0.0.3-dev0",
   "license": "Apache-2.0",
   "description": "JS bindings for hfst-optimized-lookup",

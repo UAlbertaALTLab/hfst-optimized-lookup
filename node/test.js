@@ -1,6 +1,6 @@
-import { Transducer } from './index.js';
-import { expect } from 'chai';
-import { randomBytes } from 'crypto';
+const { Transducer } = require('.');
+const { expect } = require('chai');
+const { randomBytes } = require('crypto');
 
 const DEFAULT_TRANSDUCER_FILE = "../crk-relaxed-analyzer-for-dictionary.hfstol";
 

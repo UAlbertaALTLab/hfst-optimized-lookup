@@ -2,8 +2,8 @@
   "compilerOptions": {
     "moduleResolution": "Node",
     "esModuleInterop": true,
+    "module": "CommonJS",
     "noImplicitAny": true,
-    "importHelpers": true,
     "alwaysStrict": true,
     "strict": true,
     "declaration": true,
