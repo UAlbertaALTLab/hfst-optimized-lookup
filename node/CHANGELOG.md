@@ -1,6 +1,6 @@
 # hfstol changelog
 
-## Unreleased
+## v0.0.3 2021-07-07
 
   - Add TypeScript types to JS code
 
