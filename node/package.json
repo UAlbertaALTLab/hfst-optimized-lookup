@@ -1,6 +1,6 @@
 {
   "name": "hfstol",
-  "version": "0.0.3",
+  "version": "0.0.4-dev0",
   "license": "Apache-2.0",
   "description": "JS bindings for hfst-optimized-lookup",
   "homepage": "https://github.com/UAlbertaALTLab/hfst-optimized-lookup/tree/main/node",
