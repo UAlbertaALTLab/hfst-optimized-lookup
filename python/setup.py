@@ -21,7 +21,8 @@ import platform
 import sys
 from distutils.version import LooseVersion
 from pathlib import Path
-from setuptools import setup, Extension
+from distutils.core import setup
+from distutils.extension import Extension
 from sysconfig import get_config_vars
 
 

@@ -30,15 +30,17 @@
   SO THE CURRENT STRUCTURE IS NOT SO GREAT. TODO: FIX THIS.
 */
 
+#ifndef BUILD_HFSTOL_MAIN
+/* Set default */
 #ifdef _MSC_VER
-#  define BUILD_MAIN 0
+#  define BUILD_HFSTOL_MAIN 0
 #  define hfst_fprintf_console fprintf
 #else
 #  include <getopt.h>
-#  define BUILD_MAIN 1
+#  define BUILD_HFSTOL_MAIN 1
+#endif
 #endif
 
-#include <cstdio>
 #include <vector>
 #include <map>
 #include <set>
@@ -321,7 +323,7 @@ public:
 typedef std::vector<ValueNumber> FlagDiacriticState;
 typedef std::vector<FlagDiacriticState> FlagDiacriticStateStack;
 
-#if BUILD_MAIN
+#if BUILD_HFSTOL_MAIN
 // GLOBAL FUNCTION, TODO: SUBSUME IN MAIN FOR SINGLE-FILE VERSION
 int setup(FILE * f);
 #endif

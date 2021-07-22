@@ -174,7 +174,7 @@ std::vector<std::vector<std::string> > TransducerFile::lookup(const char* input_
       return output;
 }
 
-#if BUILD_MAIN
+#if BUILD_HFSTOL_MAIN
 int main(int argc, char **argv)
 {
 
@@ -222,7 +222,7 @@ int main(int argc, char **argv)
           break;
 
         case 'v':
-#ifdef DEBUG
+#ifdef OL_DEBUG
           printDebuggingInformationFlag = true;
           preserveDiacriticRepresentationsFlag = true;
 #endif
@@ -235,7 +235,7 @@ int main(int argc, char **argv)
 
         case 'q':
         case 's':
-#ifdef DEBUG
+#ifdef OL_DEBUG
           printDebuggingInformationFlag = false;
           preserveDiacriticRepresentationsFlag = false;
 #endif
@@ -525,7 +525,7 @@ SymbolNumber Encoder::find_key(const char ** p)
   return s;
 }
 
-#if BUILD_MAIN
+#if BUILD_HFSTOL_MAIN
 void runTransducer (TransducerBase * T)
 {
   SymbolNumber * input_string = (SymbolNumber*)(malloc(2000));
@@ -681,7 +681,7 @@ TransducerBase * instantiateTransducer(FILE * f, TransducerHeader& header, Trans
     throw std::runtime_error("should not happen");
 }
 
-#if BUILD_MAIN
+#if BUILD_HFSTOL_MAIN
 int setup(FILE * f)
 {
   try
