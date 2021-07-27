@@ -1,4 +1,5 @@
 from ._types import Analysis
+
 try:
     from ._hfst_optimized_lookup import TransducerFile
 except ModuleNotFoundError:
