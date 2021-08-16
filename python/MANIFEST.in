@@ -3,6 +3,7 @@ include hfst_optimized_lookup/hfst-optimized-lookup.h
 
 include hfst_optimized_lookup/py.typed
 include hfst_optimized_lookup/__init__.pyi
+include hfst_optimized_lookup/VERSION
 
 include LICENSE
 

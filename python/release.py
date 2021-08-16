@@ -22,7 +22,7 @@ from subprocess import check_call, check_output, CalledProcessError
 from zoneinfo import ZoneInfo
 
 import math
-from setuptools.config import read_configuration, StaticModule
+from setuptools.config import read_configuration
 
 __doc__ = """
 Release a python package, updating checked-in version number for development
@@ -43,20 +43,18 @@ All it asks of you:
   - Add some notes to the “## Unreleased” section of `CHANGELOG.md` before
     releasing
   - If you want a major or minor version bump, commit the new development
-    version, e.g., `2.3.0.dev0`, to `__version__` in `__init__.py` at any time.
-  - Make sure `setup.cfg` points at `__version__`, e.g.,
-        version = attr: my_python_package_name.__version__
-    See https://packaging.python.org/guides/single-sourcing-package-version/
+    version, e.g., `2.3.0.dev0`, to `VERSION` at any time.
+  - Make sure `setup.cfg` points at `file: my_python_package_name/VERSION`
 
 
 The specific steps this script takes:
-  - Remove .dev0 suffix from `__version__` in `__init__`.py
+  - Remove .dev0 suffix from `VERSION`
   - Change “## Unreleased” to release version in `CHANGELOG.md`
   - Commit and tag
   - With optional --push flag: Push code with tag
   - With optional --release flag: Upload to pipi
   - Prepare for new development by updating CHANGELOG.md and setting
-    `__version__` to `n+1.dev0`
+    `VERSION` to `n+1.dev0`
 
 Note that since this is intended to be run in a temporary environment created by
 some continuous integration system, on error it may leave the git working
@@ -175,11 +173,11 @@ def main():
     pypi_package_name: str = read_configuration("setup.cfg")["metadata"]["name"]
     python_package_name = pypi_package_name.replace("-", "_")
 
-    version_file = Path(python_package_name) / "__init__.py"
-    current_dev_version: str = StaticModule(python_package_name).__version__
+    version_file = Path(python_package_name) / "VERSION"
+    current_dev_version: str = version_file.read_text.strip()
     release_version, new_dev_version = compute_new_versions(current_dev_version)
 
-    bump_version_file(version_file, current_dev_version, release_version)
+    bump_version_file(version_file, release_version)
 
     changelog_file = Path("CHANGELOG.md")
     changelog = Changelog(changelog_file.open("r+t"))
@@ -197,7 +195,7 @@ def main():
             "git",
             "commit",
             "-m",
-            f"Release v{release_version}",
+            f"Release python v{release_version}",
             changelog_file,
             version_file,
         ],
@@ -238,7 +236,7 @@ def main():
     else:
         print(f"If --release was specified, would run {release_cmd!r}")
 
-    bump_version_file(version_file, release_version, new_dev_version)
+    bump_version_file(version_file, new_dev_version)
     changelog.add_unreleased_section()
 
     check_call(
@@ -284,28 +282,8 @@ def compute_new_versions(current_dev_version):
     return (release_version, next_dev_version)
 
 
-def bump_version_file(version_file: Path, old_version, new_version):
-    text = version_file.read_text()
-
-    found = False
-    new_lines = []
-    for line in text.split("\n"):
-        if line.startswith("__version__"):
-            new_line = line.replace(old_version, new_version)
-            if new_line == line:
-                raise Exception(f"version {old_version} not found in {version_file}")
-            line = new_line
-
-            if found:
-                raise Exception(f"multiple __versions__ in {version_file}")
-            found = True
-
-        new_lines.append(line)
-    if not found:
-        raise Exception(f"__version__ definition ont found in {version_file}")
-
-    version_file.write_text("\n".join(new_lines))
-
+def bump_version_file(version_file: Path, new_version):
+    version_file.write_text(new_version + '\n')
 
 class Changelog:
     """
