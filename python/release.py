@@ -165,7 +165,7 @@ def main():
     # Versioning
     #
     # 0.0.3.dev0 ← version for all commits while working on v0.0.3
-    # 0.0.3 ← version for *single* commit with tag v0.0.3, set by CI system
+    # 0.0.3 ← version for *single* commit with tag python-v0.0.3, set by CI
     # 0.0.4.dev0 ← version in next commit
     #
     # https://www.python.org/dev/peps/pep-0440/#developmental-releases
@@ -201,7 +201,7 @@ def main():
         ],
         env=git_commit_env(),
     )
-    check_call(["git", "tag", f"v{release_version}"])
+    check_call(["git", "tag", f"python-v{release_version}"])
 
     # The release commit is now created, but may only be pushed later if the
     # build succeeds
@@ -222,7 +222,7 @@ def main():
         "--atomic",
         args.git_remote,
         args.git_branch,
-        f"v{release_version}",
+        f"python-v{release_version}",
     ]
 
     if args.push:

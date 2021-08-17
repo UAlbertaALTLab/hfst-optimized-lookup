@@ -5,6 +5,9 @@
   - Move `__version__` to a separate `VERSION` file to work around an
     import cycle issue sometimes seen with pip/pipenv
 
+  - Now that the same repo also contains node bindings, start tagging
+    python releases as `python-vX.Y.Z` instead of plain `vX.Y.Z`
+
 ## v0.0.11 2021-05-13
 
   - Important bug fix: when encountering an input symbol which was not in
