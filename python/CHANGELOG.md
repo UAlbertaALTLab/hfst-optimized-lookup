@@ -1,5 +1,7 @@
 # hfst-optimized-lookup changelog
 
+## Unreleased
+
 ## v0.0.12 2021-08-17
 
   - Move `__version__` to a separate `VERSION` file to work around an
