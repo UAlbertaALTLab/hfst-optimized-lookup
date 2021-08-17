@@ -174,7 +174,7 @@ def main():
     python_package_name = pypi_package_name.replace("-", "_")
 
     version_file = Path(python_package_name) / "VERSION"
-    current_dev_version: str = version_file.read_text.strip()
+    current_dev_version: str = version_file.read_text().strip()
     release_version, new_dev_version = compute_new_versions(current_dev_version)
 
     bump_version_file(version_file, release_version)
