@@ -43,18 +43,18 @@ All it asks of you:
   - Add some notes to the “## Unreleased” section of `CHANGELOG.md` before
     releasing
   - If you want a major or minor version bump, commit the new development
-    version, e.g., `2.3.0.dev0`, to `VERSION` at any time.
-  - Make sure `setup.cfg` points at `file: my_python_package_name/VERSION`
+    version, e.g., `2.3.0.dev0`, to `__VERSION__` at any time.
+  - Make sure `setup.cfg` points at `file: my_python_package_name/__VERSION__`
 
 
 The specific steps this script takes:
-  - Remove .dev0 suffix from `VERSION`
+  - Remove .dev0 suffix from `__VERSION__`
   - Change “## Unreleased” to release version in `CHANGELOG.md`
   - Commit and tag
   - With optional --push flag: Push code with tag
   - With optional --release flag: Upload to pipi
   - Prepare for new development by updating CHANGELOG.md and setting
-    `VERSION` to `n+1.dev0`
+    `__VERSION__` to `n+1.dev0`
 
 Note that since this is intended to be run in a temporary environment created by
 some continuous integration system, on error it may leave the git working
@@ -173,7 +173,7 @@ def main():
     pypi_package_name: str = read_configuration("setup.cfg")["metadata"]["name"]
     python_package_name = pypi_package_name.replace("-", "_")
 
-    version_file = Path(python_package_name) / "VERSION"
+    version_file = Path(python_package_name) / "__VERSION__"
     current_dev_version: str = version_file.read_text().strip()
     release_version, new_dev_version = compute_new_versions(current_dev_version)
 

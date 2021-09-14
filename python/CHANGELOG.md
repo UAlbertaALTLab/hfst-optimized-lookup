@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+  - Add a public no-op function so that cython will generate a header file
+    for embedding
+
+  - Rename some internal C macro `#ifdef` names to reduce collisions.
+    `DEBUG` is now `OL_DEBUG`, and `BUILD_MAIN` is now `BUILD_HFSTOL_MAIN``
+
 ## v0.0.12 2021-08-17
 
   - Move `__version__` to a separate `VERSION` file to work around an

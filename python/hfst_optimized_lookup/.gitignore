@@ -1,2 +1,9 @@
+# cython-generated
+_hfst_optimized_lookup.cpp
+_hfst_optimized_lookup.h
+
+# The canonical versions of these files are stored in a parent directory.
+# These are local copies, not symlinks, to make building the python sdist
+# work.
 hfst-optimized-lookup.cc
 hfst-optimized-lookup.h

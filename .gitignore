@@ -9,9 +9,6 @@ docs/_build
 *.so
 *.egg-info/
 
-# cython-generated
-python/hfst_optimized_lookup/_hfst_optimized_lookup.cpp
-
 # executable
 hfst-optimized-lookup
 
