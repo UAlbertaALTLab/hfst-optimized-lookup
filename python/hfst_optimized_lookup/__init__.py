@@ -1,7 +1,11 @@
 from pathlib import Path
 
 from ._types import Analysis
-from ._hfst_optimized_lookup import TransducerFile
+
+try:
+    from ._hfst_optimized_lookup import TransducerFile
+except ModuleNotFoundError:
+    from _hfst_optimized_lookup import TransducerFile
 
 __all__ = ["TransducerFile", "Analysis"]
 

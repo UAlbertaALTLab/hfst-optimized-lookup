@@ -4,7 +4,7 @@ from libcpp.string cimport string as std_string
 from libcpp.vector cimport vector
 
 from .TransducerFile cimport TransducerFile as CppTransducerFile
-from ._types import Analysis
+from hfst_optimized_lookup._types import Analysis
 
 
 ### String utilities
@@ -21,6 +21,12 @@ cdef bytes_from_cstring(s):
         raise Exception("Passed non-string")
     return s.encode('UTF-8')
 
+cdef public noop():
+    """This public function only exists so that Cython creates a header file.
+
+    That’s needed to get a PyInit__hfst_optimized_lookup declaration
+    when embedding.
+    """
 
 cdef class TransducerFile:
     """
