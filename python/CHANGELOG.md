@@ -1,5 +1,7 @@
 # hfst-optimized-lookup changelog
 
+## Unreleased
+
 ## v0.0.13 2021-09-15
 
   - Add a public no-op function so that cython will generate a header file
