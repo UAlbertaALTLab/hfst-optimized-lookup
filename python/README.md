@@ -2,6 +2,7 @@ hfst-optimized-lookup
 =====================
 
 [![PyPI version](https://img.shields.io/pypi/v/hfst-optimized-lookup)](https://pypi.org/project/hfst-optimized-lookup/)
+[![Documentation](https://github.com/UAlbertaALTLab/hfst-optimized-lookup/actions/workflows/test.yml/badge.svg)](https://github.com/UAlbertaALTLab/hfst-optimized-lookup/actions)
 [![Documentation](https://github.com/UAlbertaALTLab/hfst-optimized-lookup/actions/workflows/build-docs.yml/badge.svg)](https://ualbertaaltlab.github.io/hfst-optimized-lookup/)
 
 A pip-installable library version of [hfst-optimized-lookup][], originally
