@@ -1,4 +1,4 @@
-name: Build and Publish Sphinx Documentation
+name: Sphinx Documentation
 
 on:
   push:
@@ -11,6 +11,24 @@ defaults:
 
 jobs:
   build:
+
+    # When releasing, there is a race condition in building the
+    # documentation. Two commits are pushed in quick succession:
+    #
+    #  1. The release commit
+    #  2. The commit that bumps the version to the new dev version
+    #
+    # Without the following conditional to skip the documentation build for
+    # that second commit, both commits would trigger workflows that starts
+    # around the same time, and the one that finishes first would cause the
+    # other to fail when it tries to make a conflicting commit.
+    #
+    # Note: testing array[n] for null is the GitHub Actions way of checking
+    # if the length of an array is <= n.
+    if: >-
+        !(github.event.commits[1] == null
+        && startsWith(github.event.head_commit.message, 'Begin work on v'))
+
     runs-on: ubuntu-20.04
 
     # Clones the repo TWICE, once for each branch: main and gh-pages
