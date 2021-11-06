@@ -59,7 +59,7 @@ jobs:
         python-version: 3.9
 
     # Build
-    - run: pip install pipenv
+    - run: pip install pipenv==2021.5.29
     - run: pipenv install --dev
     - run: pipenv run make -C python docs
     - run: cp -a python/docs/_build/html/. ${GITHUB_WORKSPACE}/gh-pages/
