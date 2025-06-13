@@ -1,6 +1,8 @@
 # hfst-optimized-lookup changelog
 
-## Unreleased
+## v0.0.14 2025-06-13
+
+  - Add pyproject.toml and configuration to run in later python versions.
 
 ## v0.0.13 2021-09-15
 
