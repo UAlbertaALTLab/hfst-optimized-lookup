@@ -15,9 +15,11 @@ pytest-mypy = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
 m2r2 = "*"
+setuptools = "*"
+build = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.12"
 
 [pipenv]
 allow_prereleases = true

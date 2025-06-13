@@ -19,7 +19,7 @@
 import os
 import platform
 import sys
-from distutils.version import LooseVersion
+from setuptools._distutils.version import LooseVersion
 from pathlib import Path
 from setuptools import setup, Extension
 from sysconfig import get_config_vars
