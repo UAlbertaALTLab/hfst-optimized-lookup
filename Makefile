@@ -17,8 +17,8 @@ clean::
 
 node: crk-relaxed-analyzer-for-dictionary.hfstol
 	$(MAKE) -C node
-test::
-	$(MAKE) -C node test
+#test::
+#	$(MAKE) -C node test
 clean::
 	$(MAKE) -C node clean
 

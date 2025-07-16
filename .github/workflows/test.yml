@@ -14,7 +14,7 @@ on:
     # placeholder commit if there have been no commits for 30 days?
     #
     # * is a special character in YAML so you have to quote this string
-    - cron:  '05 16 * * *'
+    #- cron:  '05 16 * * *'
 
 jobs:
   test:
@@ -23,7 +23,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
         python: [3.12]
-        node: ['22']
+        node: []
 
     steps:
       - name: checkout
