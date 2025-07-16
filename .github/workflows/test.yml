@@ -22,8 +22,8 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
-        python: [3.9]
-        node: ['14']
+        python: [3.12]
+        node: ['22']
 
     steps:
       - name: checkout
