@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - run: pip install pipenv==2021.5.29
+      - run: pip install pipenv
 
       - run: pipenv install --dev
 
