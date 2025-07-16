@@ -23,7 +23,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
         python: [3.12]
-        node: []
+        #node: []
 
     steps:
       - name: checkout
@@ -34,9 +34,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
+      #- uses: actions/setup-node@v2
+      #  with:
+      #    node-version: ${{ matrix.node }}
 
       - run: pip install pipenv
 
