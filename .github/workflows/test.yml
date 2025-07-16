@@ -3,7 +3,7 @@ name: Build and Publish Sphinx Documentation
 on:
   pull_request:
   push:
-  schedule:
+    #schedule:
     # Warning: GitHub will *stop running scheduled tests* if the repository
     # has no activity for 60 days. A button will then appear under the
     # actions tab in the web interface, allowing re-enabling of the action.
